@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+:root {
+  --bg-deep: #0a0e14;
+  --bg-mid: #0f141c;
+  --text-primary: #e8ecf2;
+  --text-muted: #8a95a8;
+  --accent: #4f7dff;
+  --accent-dim: rgba(79, 125, 255, 0.35);
+}
+
+/* Preflight sets a light body background — re-assert dark canvas after Tailwind layers. */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: dark;
+    background-color: var(--bg-deep);
+  }
+
+  body {
+    background-color: var(--bg-deep);
+    background-image:
+      linear-gradient(180deg, rgba(44, 77, 146, 0.22) 0%, rgba(20, 35, 69, 0.12) 24%, rgba(10, 14, 20, 0) 56%),
+      radial-gradient(ellipse 145% 95% at 18% -34%, rgba(86, 130, 255, 0.16) 0%, rgba(45, 70, 140, 0.08) 35%, transparent 66%),
+      radial-gradient(ellipse 95% 66% at 88% 108%, rgba(18, 30, 66, 0.46) 0%, transparent 58%);
+    background-attachment: fixed;
+    color: var(--text-primary);
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::selection {
+  background: rgba(79, 125, 255, 0.22);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid rgba(79, 125, 255, 0.55);
+  outline-offset: 3px;
+}
+
+@keyframes partner-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-marquee {
+  animation: partner-marquee 48s linear infinite;
+  will-change: transform;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+main section[id^="act-"] {
+  scroll-margin-top: max(5.75rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partner-marquee {
+    animation: none;
+    transform: translateX(0);
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+    row-gap: 1rem;
+  }
+
+  /* Keep partner ticker as a real marquee when explicitly requested. */
+  .partner-marquee.partner-marquee-force {
+    animation: partner-marquee 46s linear infinite;
+    transform: translateX(0);
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    width: max-content;
+    max-width: none;
+    margin-left: 0;
+    margin-right: 0;
+    row-gap: 0;
+  }
+
+  body {
+    background-attachment: scroll;
+  }
+
+  .elevate-atmo-noise {
+    opacity: 0.02;
+  }
+}
+
+/* Atmosphere reacts to scroll-dominant narrative phase (set in useNarrativeScroll). */
+.elevate-atmo-glow {
+  opacity: 0.88;
+}
+
+.elevate-atmo-floor {
+  opacity: 1;
+}
+
+.elevate-atmo-vignette {
+  opacity: 0.82;
+}
+
+html[data-narrative="chaosField"] .elevate-atmo-glow {
+  opacity: 0.42;
+}
+
+html[data-narrative="chaosField"] .elevate-atmo-vignette {
+  opacity: 0.95;
+}
+
+html[data-narrative="routeField"] .elevate-atmo-glow {
+  opacity: 0.95;
+}
+
+html[data-narrative="supportField"] .elevate-atmo-glow,
+html[data-narrative="aiField"] .elevate-atmo-glow {
+  opacity: 0.9;
+}
+
+html[data-narrative="proofMetricsField"] .elevate-atmo-glow,
+html[data-narrative="proofCasesField"] .elevate-atmo-glow,
+html[data-narrative="proofEcosystemField"] .elevate-atmo-glow {
+  opacity: 0.78;
+}
+
+html[data-narrative="calmField"] .elevate-atmo-glow {
+  opacity: 0.32;
+}
+
+html[data-narrative="calmField"] .elevate-atmo-floor {
+  opacity: 0.55;
+}
+
+html[data-narrative="calmField"] .elevate-atmo-vignette {
+  opacity: 0.72;
+}
