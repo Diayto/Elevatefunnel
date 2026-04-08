@@ -78,6 +78,7 @@ const HERO_PATH_SPEED_MUL = 1.5;
 
 const GROUP_YAW_SPEED = 0.1;
 const GROUP_YAW_SPEED_REDUCED = 0.016;
+const MOBILE_MAX_WIDTH = 768;
 
 const HEADER_SELECTOR = "[data-site-header]";
 /** Match vertical fit helper to scaled group (FIELD_GROUP_SCALE includes ~+15% hero size). */
@@ -201,12 +202,22 @@ export function ParticleField({
 }: Props) {
   void _rest.uniforms;
   const { camera, size, gl } = useThree();
-  const fieldOffsetY = useParticleFieldOffsetY(camera, gl, FIELD_OFFSET_XZ[0]);
+  const [isMobile, setIsMobile] = useState(false);
+  const fieldOffsetX = isMobile ? 0.66 : FIELD_OFFSET_XZ[0];
+  const fieldOffsetY = useParticleFieldOffsetY(camera, gl, fieldOffsetX);
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const pointsRef = useRef<THREE.Points>(null);
   const groupRef = useRef<THREE.Group>(null);
   const pointerNDC = useRef(new THREE.Vector2(0, 0));
   const tabHiddenRef = useRef(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_WIDTH}px)`);
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     const onVis = () => {
@@ -252,6 +263,7 @@ export function ParticleField({
 
     const u = m.uniforms;
     const H = HERO_PARTICLE_VIS;
+    const mobileVisual = isMobile && !reducedMotion;
     u.uTime.value = state.clock.elapsedTime;
     u.uCohesion.value = H.cohesion;
     u.uNoise.value = H.noise;
@@ -277,8 +289,8 @@ export function ParticleField({
     u.uDepthZ2.value.set(...zones.depthZones[2]);
     u.uDepthStrength.value = 0;
     u.uDepthLift.value.set(DEPTH_LIFT.x, DEPTH_LIFT.y, DEPTH_LIFT.z);
-    u.uGlow.value = H.glow;
-    u.uGlobalAlpha.value = H.globalAlpha;
+    u.uGlow.value = H.glow * (mobileVisual ? 0.58 : 1);
+    u.uGlobalAlpha.value = H.globalAlpha * (mobileVisual ? 0.6 : 1);
     u.uMotionScale.value = motionScale;
     u.uPixelRatio.value = gl.getPixelRatio();
     u.uResolution.value.set(size.width, size.height);
@@ -288,7 +300,7 @@ export function ParticleField({
 
     u.uSandLifecycle.value = H.sandLifecycle;
     u.uLifeSec.value = HERO_LIFE_SEC;
-    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL;
+    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL * (mobileVisual ? 0.7 : 1);
 
     const hs = reducedMotion ? 0.28 : 1;
     u.uHotspot.value.set(hotspot.nx, hotspot.ny, hotspot.nr, hotspot.strength * hs);
@@ -309,7 +321,7 @@ export function ParticleField({
     if (g) {
       const ω = reducedMotion ? GROUP_YAW_SPEED_REDUCED : GROUP_YAW_SPEED;
       const sandLock = 1 - H.sandLifecycle * 0.92;
-      g.rotation.y += delta * ω * sandLock;
+      g.rotation.y += delta * ω * sandLock * (mobileVisual ? 0.52 : 1);
     }
 
     m.blending = THREE.AdditiveBlending;
@@ -365,9 +377,9 @@ export function ParticleField({
 
   return (
     <group
-      position={[FIELD_OFFSET_XZ[0], fieldOffsetY, FIELD_OFFSET_XZ[2]]}
+      position={[fieldOffsetX, fieldOffsetY, FIELD_OFFSET_XZ[2]]}
       ref={groupRef}
-      scale={FIELD_GROUP_SCALE}
+      scale={isMobile ? FIELD_GROUP_SCALE * 0.84 : FIELD_GROUP_SCALE}
     >
       <points ref={pointsRef} frustumCulled={false} geometry={geometry}>
         <shaderMaterial
