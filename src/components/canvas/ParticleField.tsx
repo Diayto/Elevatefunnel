@@ -295,12 +295,12 @@ export function ParticleField({
     u.uPixelRatio.value = gl.getPixelRatio();
     u.uResolution.value.set(size.width, size.height);
     u.uPointerNDC.value.copy(pointerNDC.current);
-    u.uPointerStrength.value = reducedMotion ? 0 : 1;
-    u.uPointerSpray.value = reducedMotion ? 0 : 1.22;
+    u.uPointerStrength.value = reducedMotion || isMobile ? 0 : 1;
+    u.uPointerSpray.value = reducedMotion || isMobile ? 0 : 1.22;
 
     u.uSandLifecycle.value = H.sandLifecycle;
     u.uLifeSec.value = HERO_LIFE_SEC;
-    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL * (mobileVisual ? 0.7 : 1);
+    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL * (mobileVisual ? 0.52 : 1);
 
     const hs = reducedMotion ? 0.28 : 1;
     u.uHotspot.value.set(hotspot.nx, hotspot.ny, hotspot.nr, hotspot.strength * hs);
