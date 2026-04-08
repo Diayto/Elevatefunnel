@@ -203,8 +203,10 @@ export function ParticleField({
   void _rest.uniforms;
   const { camera, size, gl } = useThree();
   const [isMobile, setIsMobile] = useState(false);
-  const fieldOffsetX = isMobile ? 0.66 : FIELD_OFFSET_XZ[0];
-  const fieldOffsetY = useParticleFieldOffsetY(camera, gl, fieldOffsetX);
+  const fieldOffsetX = isMobile ? 0.54 : FIELD_OFFSET_XZ[0];
+  const dynamicFieldOffsetY = useParticleFieldOffsetY(camera, gl, fieldOffsetX);
+  // iOS viewport height changes while scrolling (address bar), so keep mobile sphere anchored.
+  const fieldOffsetY = isMobile ? 0.06 : dynamicFieldOffsetY;
   const materialRef = useRef<THREE.ShaderMaterial>(null);
   const pointsRef = useRef<THREE.Points>(null);
   const groupRef = useRef<THREE.Group>(null);
@@ -379,7 +381,7 @@ export function ParticleField({
     <group
       position={[fieldOffsetX, fieldOffsetY, FIELD_OFFSET_XZ[2]]}
       ref={groupRef}
-      scale={isMobile ? FIELD_GROUP_SCALE * 0.84 : FIELD_GROUP_SCALE}
+      scale={isMobile ? FIELD_GROUP_SCALE * 0.72 : FIELD_GROUP_SCALE}
     >
       <points ref={pointsRef} frustumCulled={false} geometry={geometry}>
         <shaderMaterial
