@@ -38,7 +38,7 @@ export const MENTORS: MentorProfile[] = [
   },
   {
     id: "kamilla",
-    name: "Kishkashbayeva Kamilla",
+    name: "Akhmetzhan Nurbike",
     role: "Career Consultant",
     roleAboveName: true,
     photoSrc: "/mentors/kamilla.png",
@@ -48,7 +48,7 @@ export const MENTORS: MentorProfile[] = [
   },
   {
     id: "nurbike",
-    name: "Akhmetzhan Nurbike",
+    name: "Kishkashbayeva Kamilla",
     role: "Career Consultant",
     roleAboveName: true,
     photoSrc: "/mentors/kamilla-new.png",

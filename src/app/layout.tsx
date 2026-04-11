@@ -31,6 +31,9 @@ export const metadata: Metadata = {
   title: "Elevate Interns",
   description:
     "Структурированный доступ к международным стажировкам с менторской поддержкой и ИИ.",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "48x48 32x32 16x16", type: "image/x-icon" }],
+  },
 };
 
 export const viewport: Viewport = {
