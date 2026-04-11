@@ -1,26 +1,33 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { PrivacyPolicyContent } from "@/components/legal/PrivacyPolicyContent";
+import { AtmosphereBackdrop } from "@/components/layout/AtmosphereBackdrop";
+import { SiteFooter } from "@/components/layout/SiteFooter";
+import { SiteHeader } from "@/components/layout/SiteHeader";
+
+export const metadata: Metadata = {
+  title: "Политика конфиденциальности | Elevate Interns",
+  description:
+    "Политика конфиденциальности и обработки персональных данных ИП «Тлеуғалиұлы» (Elevate Interns).",
+};
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-2xl px-5 py-24 sm:px-6 md:py-32">
-      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">
-        Юридическая информация
-      </p>
-      <h1 className="mt-4 font-[family-name:var(--font-serif)] text-3xl font-normal tracking-tight text-[var(--text-primary)]">
-        Политика конфиденциальности
-      </h1>
-      <p className="mt-8 text-[17px] leading-relaxed text-[var(--text-muted)]">
-        Полный текст политики готовится к публикации. По вопросам обработки данных
-        свяжитесь с командой через контакты, указанные в заявке или на сайте.
-      </p>
-      <p className="mt-10">
-        <Link
-          className="text-sm text-[var(--accent)] underline-offset-4 transition hover:underline"
-          href="/#act-apply"
-        >
-          ← К форме заявки
-        </Link>
-      </p>
-    </main>
+    <>
+      <AtmosphereBackdrop />
+      <SiteHeader />
+      <main className="relative z-10 min-h-[80vh] px-5 pb-24 pt-[4.75rem] sm:px-6 md:px-14 md:pb-32 md:pt-[5.25rem] lg:px-20">
+        <PrivacyPolicyContent />
+        <p className="mx-auto mt-12 max-w-3xl text-center md:text-left">
+          <Link
+            className="text-sm text-[var(--accent)] underline-offset-4 transition hover:underline"
+            href="/#act-apply"
+          >
+            ← К форме заявки
+          </Link>
+        </p>
+      </main>
+      <SiteFooter />
+    </>
   );
 }

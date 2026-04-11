@@ -54,7 +54,7 @@ async function sendViaResend(payload: LeadPayload): Promise<boolean> {
     `Имя: ${payload.name}`,
     `Телефон: ${payload.phone}`,
     `Email: ${payload.email}`,
-    `Курс / вуз: ${payload.course ?? "—"}`,
+    `Курс / вуз: ${payload.course ?? "-"}`,
     `Время: ${payload.submittedAt}`,
   ].join("\n");
 

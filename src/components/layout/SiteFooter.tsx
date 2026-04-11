@@ -1,8 +1,8 @@
 const FOOTER_NAV = [
-  { href: "#act-route", label: "Программа" },
-  { href: "#act-proof-metrics", label: "Результаты" },
-  { href: "#act-depth", label: "Участие" },
-  { href: "#act-apply", label: "Заявка" },
+  { href: "/#act-route", label: "Программа" },
+  { href: "/#act-proof-metrics", label: "Результаты" },
+  { href: "/#act-depth", label: "Участие" },
+  { href: "/#act-apply", label: "Заявка" },
 ] as const;
 
 export function SiteFooter() {

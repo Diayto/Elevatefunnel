@@ -7,12 +7,19 @@ export type TestimonialShort = {
   /** Заголовок для iframe (a11y) */
   label: string;
   imageSrc?: string;
+  /** Локальное видео (public/…), взаимоисключимо с встраиванием YouTube по id. */
+  videoSrc?: string;
   name?: string;
   role?: string;
   outcomeLine?: string;
 };
 
 export const TESTIMONIAL_SHORTS: TestimonialShort[] = [
+  {
+    id: "review-local-5824",
+    label: "Видеоотзыв участника",
+    videoSrc: "/testimonials/review-5824.mp4",
+  },
   { id: "JpyLduJWhLw", label: "Видеоотзыв участника" },
   { id: "vv3MdnUPVM8", label: "Видеоотзыв участника" },
   { id: "DV4G9A4lDns", label: "Видеоотзыв участника" },
@@ -88,5 +95,13 @@ export const TESTIMONIAL_SHORTS: TestimonialShort[] = [
     name: "Арина",
     role: "Результат студента",
     outcomeLine: "Стажировка в престижной компании в Торонто",
+  },
+  {
+    id: "case-svyata",
+    label: "Результат студента Святы",
+    imageSrc: "/cases/svyata.png",
+    name: "Свята",
+    role: "Результат студента",
+    outcomeLine: "Стажировка в ii.agency · Монако",
   },
 ];

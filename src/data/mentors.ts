@@ -26,7 +26,7 @@ export const MENTORS: MentorProfile[] = [
   },
   {
     id: "ruslan",
-    name: "Ruslan Narbaev",
+    name: "Narbaev Ruslan",
     role: "Co-Founder:",
     roleAboveName: true,
     photoSrc: "/mentors/ruslan-narbaev.png",
@@ -38,17 +38,19 @@ export const MENTORS: MentorProfile[] = [
   },
   {
     id: "kamilla",
-    name: "Нурбике",
-    role: "Карьерный консультант",
+    name: "Kishkashbayeva Kamilla",
+    role: "Career Consultant",
+    roleAboveName: true,
     photoSrc: "/mentors/kamilla.png",
     intro:
-      "Поступила в New York University на полный грант, Победитель Harvard Global Case Competition, MIT Launch X, Georgetown, Pioneer Academics, Bentley Wall Street 101 — принята на программы на полном гранте. $15 000 и 1 место в международной стартап-битве Digital Almaty. Финалист ABC Incubation X TCA 8.0 и топ 10 среди 150 лучших команд. CEO of KazrobotX, Co-founder PulmoAI, стажировалась в ISSAI SRP, Samsung, KPMG.",
+      "Поступила в New York University на полный грант, Победитель Harvard Global Case Competition, MIT Launch X, Georgetown, Pioneer Academics, Bentley Wall Street 101 - принята на программы на полном гранте. $15 000 и 1 место в международной стартап-битве Digital Almaty. Финалист ABC Incubation X TCA 8.0 и топ 10 среди 150 лучших команд. CEO of KazrobotX, Co-founder PulmoAI, стажировалась в ISSAI SRP, Samsung, KPMG.",
     details: [],
   },
   {
     id: "nurbike",
-    name: "Камилла",
-    role: "Карьерный консультант",
+    name: "Akhmetzhan Nurbike",
+    role: "Career Consultant",
+    roleAboveName: true,
     photoSrc: "/mentors/kamilla-new.png",
     intro:
       "Поступила в Northwestern University (топ-30 в мире), Выпускница Harvard Entrepreneurship School, Stanford, UC Berkeley Journalism Camp. Вице-президент Youth Science Journal. Амбассадор инициатив ООН. Стажёр в американской компании Amplify, а также поработала с профессионалами из The New York Times и The Guardian. Дважды выпускница программ EducationUSA. Автор научной работы, опубликованной в Oxford Journal of Student Scholarship.",

@@ -1,17 +1,29 @@
 import type { Metadata, Viewport } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Inter, Mulish } from "next/font/google";
 import "./globals.css";
 
-const sans = Inter({
+/**
+ * Mulish (Muli) — основной текст и крупные заголовки.
+ * Две CSS-переменные для совместимости с существующими классами (--font-sans / --font-serif).
+ */
+const sans = Mulish({
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
   variable: "--font-sans",
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const serif = Cormorant_Garamond({
+const display = Mulish({
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  weight: ["400", "500", "600"],
   variable: "--font-serif",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+/** Только логотип «Elevate Interns» в шапке — Inter. */
+const interLogo = Inter({
+  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
+  variable: "--font-inter-logo",
   display: "swap",
 });
 
@@ -35,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="ru"
-      className={`${sans.variable} ${serif.variable}`}
+      className={`${sans.variable} ${display.variable} ${interLogo.variable}`}
       style={{ backgroundColor: "var(--bg-deep)" }}
     >
       <body className="min-h-screen bg-[var(--bg-deep)] antialiased font-[family-name:var(--font-sans)]">

@@ -5,10 +5,10 @@ import { useState } from "react";
 import { useReducedMotionSafe } from "@/lib/motion/useReducedMotionSafe";
 
 const NAV = [
-  { href: "#act-problem", label: "Контекст" },
-  { href: "#act-route", label: "Программа" },
-  { href: "#act-support", label: "Поддержка" },
-  { href: "#act-proof-metrics", label: "Результаты" },
+  { href: "/#act-problem", label: "Контекст" },
+  { href: "/#act-route", label: "Программа" },
+  { href: "/#act-support", label: "Поддержка" },
+  { href: "/#act-proof-metrics", label: "Результаты" },
 ] as const;
 
 export function SiteHeader() {
@@ -34,8 +34,8 @@ export function SiteHeader() {
     >
       <div className="relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4 md:gap-6 md:px-10">
         <motion.a
-          href="#act-hero"
-          className="text-[13px] font-semibold uppercase tracking-[0.2em] text-[var(--text-primary)] transition hover:text-[var(--accent)]"
+          href="/#act-hero"
+          className="font-[family-name:var(--font-inter-logo)] text-[13px] font-semibold uppercase tracking-[0.2em] text-[var(--text-primary)] transition hover:text-[var(--accent)]"
           whileTap={{ scale: 0.98 }}
         >
           Elevate Interns
@@ -60,7 +60,7 @@ export function SiteHeader() {
         </nav>
         <div className="flex items-center gap-3">
           <motion.a
-            href="#act-apply"
+            href="/#act-apply"
             className="hidden rounded-sm border border-[var(--accent)]/50 bg-[var(--accent)]/10 px-4 py-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] transition hover:border-[var(--accent)] hover:bg-[var(--accent)]/20 sm:inline-flex"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
@@ -110,7 +110,7 @@ export function SiteHeader() {
                   </motion.a>
                 ))}
                 <motion.a
-                  href="#act-apply"
+                  href="/#act-apply"
                   initial={{ opacity: reduced ? 1 : 0, x: reduced ? 0 : -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{

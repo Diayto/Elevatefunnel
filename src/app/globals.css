@@ -74,8 +74,9 @@ button:focus-visible {
   display: none;
 }
 
+/* Под фиксированный header; без лишнего зазора под шапкой при переходе по якорю. */
 main section[id^="act-"] {
-  scroll-margin-top: max(5.75rem, calc(env(safe-area-inset-top, 0px) + 4.5rem));
+  scroll-margin-top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 3rem));
 }
 
 @media (prefers-reduced-motion: reduce) {

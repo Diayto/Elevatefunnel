@@ -53,9 +53,9 @@ export function HeroIntro() {
       </motion.p>
       <motion.h1
         variants={item}
-        className="font-[family-name:var(--font-serif)] text-[clamp(2.35rem,5.5vw,4rem)] font-normal leading-[1.06] tracking-[-0.02em] text-[var(--text-primary)] text-balance"
+        className="font-[family-name:var(--font-serif)] text-[clamp(2.12rem,4.95vw,3.6rem)] font-normal leading-[1.06] tracking-[-0.02em] text-[var(--text-primary)] text-balance"
       >
-        Международные стажировки и глобальные возможности — системный путь к
+        Международные стажировки и глобальные возможности - системный путь к
         сильной карьере.
       </motion.h1>
       <motion.p

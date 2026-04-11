@@ -41,14 +41,6 @@ export function LandingPage() {
 
   useEffect(() => {
     if (caseItems.length === 0) return;
-    const timer = window.setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % caseItems.length);
-    }, 3000);
-    return () => window.clearInterval(timer);
-  }, [caseItems.length]);
-
-  useEffect(() => {
-    if (caseItems.length === 0) return;
     setActiveTestimonial((prev) => prev % caseItems.length);
   }, [caseItems.length]);
 
@@ -168,7 +160,7 @@ export function LandingPage() {
               Партнёры
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
-              Нам доверяют команды, которые нанимают за границей. Реальные партнёрства и реальный контекст найма, без декоративных логотипов.
+              Нам доверяют команды, которые нанимают за границей.
             </p>
           </div>
           </Reveal>
@@ -210,7 +202,7 @@ export function LandingPage() {
           <Reveal className="mx-auto max-w-3xl">
           <div>
             <h2 className="font-[family-name:var(--font-serif)] text-3xl font-normal tracking-tight text-[var(--text-primary)] md:text-4xl">
-              Семь недель пошагового маршрута — не хаотичный набор советов.
+              Семь недель пошагового маршрута - не хаотичный набор советов.
             </h2>
             <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-[var(--text-muted)]">
               Вы получаете один цельный трек: профиль, отклики, интервью и поддержка ментора.
@@ -221,7 +213,7 @@ export function LandingPage() {
                   Недели 1-2
                 </span>
                 <span className="mt-2 block text-[var(--text-primary)]">
-                  Цель, позиционирование и география; тезис о роли — до массовых
+                  Цель, позиционирование и география; тезис о роли - до массовых
                   откликов.
                 </span>
               </li>
@@ -240,7 +232,7 @@ export function LandingPage() {
                 </span>
                 <span className="mt-2 block text-[var(--text-primary)]">
                   Углубление в интервью и офферы, решения по предложениям и спокойная
-                  передача дальше — по ситуации.
+                  передача дальше - по ситуации.
                 </span>
               </li>
             </ol>
@@ -301,7 +293,11 @@ export function LandingPage() {
                     <div className="relative mx-auto aspect-[4/5] w-[66%] overflow-hidden rounded-[12px] border border-white/[0.1] bg-[linear-gradient(180deg,rgba(16,26,40,0.9)_0%,rgba(11,19,32,0.92)_100%)] shadow-[0_20px_60px_-34px_rgba(0,0,0,0.88)]">
                       <Image
                         src={m.photoSrc}
-                        alt={`${m.name}, ${m.role}`}
+                        alt={
+                          m.roleAboveName
+                            ? `${m.role} ${m.name}`
+                            : `${m.name}, ${m.role}`
+                        }
                         fill
                         sizes="(min-width: 1024px) 380px, (min-width: 768px) 44vw, 44vw"
                         className="object-cover object-center grayscale-[18%]"
@@ -374,10 +370,10 @@ export function LandingPage() {
               id="proof-metrics-heading"
               className="max-w-2xl font-[family-name:var(--font-serif)] text-3xl font-normal tracking-tight text-[var(--text-primary)] md:text-4xl"
             >
-              Предварительные ориентиры — не аудированная отчётность
+              Предварительные ориентиры - не аудированная отчётность
             </h2>
             <p className="mt-5 max-w-2xl text-[14px] leading-relaxed text-[var(--text-muted)]">
-              Цифры ниже — рабочие ориентиры до публикации проверенных метрик по
+              Цифры ниже - рабочие ориентиры до публикации проверенных метрик по
               участникам, географиям и трудоустройству. После верификации данные
               будут обновлены; до этого момента блок не следует читать как
               финальные итоги программы.
@@ -398,7 +394,7 @@ export function LandingPage() {
                   120+
                 </p>
                 <p className="mt-2 text-sm text-[var(--text-muted)]">
-                  Студентов в структурированных когортах — ориентир до верификации.
+                  Студентов в структурированных когортах - ориентир до верификации.
                 </p>
               </div>
               <div className="md:border-r md:border-white/[0.06] md:pr-8">
@@ -406,7 +402,7 @@ export function LandingPage() {
                   14
                 </p>
                 <p className="mt-2 text-sm text-[var(--text-muted)]">
-                  Рынков с движением к офферу — ориентир до верификации.
+                  Рынков с движением к офферу - ориентир до верификации.
                 </p>
               </div>
               <div>
@@ -414,7 +410,7 @@ export function LandingPage() {
                   84%
                 </p>
                 <p className="mt-2 text-sm text-[var(--text-muted)]">
-                  Сигнал интервью или оффера в окне — ориентир до верификации.
+                  Сигнал интервью или оффера в окне - ориентир до верификации.
                 </p>
               </div>
             </div>
@@ -457,6 +453,16 @@ export function LandingPage() {
                               sizes="292px"
                               className="object-cover object-center"
                             />
+                          ) : v.videoSrc ? (
+                            <video
+                              className="absolute inset-0 h-full w-full border-0 object-cover"
+                              controls
+                              playsInline
+                              preload="metadata"
+                              aria-label={v.label}
+                            >
+                              <source src={v.videoSrc} type="video/mp4" />
+                            </video>
                           ) : (
                             <iframe
                               title={v.label}
@@ -528,7 +534,7 @@ export function LandingPage() {
           <Reveal className="mx-auto max-w-5xl">
           <div>
             <h2 className="font-[family-name:var(--font-serif)] text-3xl font-normal tracking-tight text-[var(--text-primary)] md:text-4xl">
-              Три уровня сопровождения — одна семинедельная программа.
+              Три уровня сопровождения - одна семинедельная программа.
             </h2>
             <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-[var(--text-muted)]">
               Silver, Gold и Diamond: форматы участия, а не «пакеты», от системы и
@@ -578,7 +584,7 @@ export function LandingPage() {
                   bullets: [
                     "Индивидуальный маршрут под целевые компании и роли",
                     "Приоритетное сопровождение и большая глубина персонализации",
-                    "Акцент на сильных работодателях — по ситуации участника",
+                    "Акцент на сильных работодателях - по ситуации участника",
                   ],
                 },
               ].map((col, colIndex) => (
@@ -672,7 +678,7 @@ export function LandingPage() {
             Подать заявку
           </a>
           <p className="mx-auto mt-4 max-w-md text-[13px] text-[var(--text-muted)]">
-            Короткий контакт — команда подскажет формат и ответит на вопросы по программе.
+            Короткий контакт - команда подскажет формат и ответит на вопросы по программе.
           </p>
         </div>
 
@@ -718,12 +724,15 @@ export function LandingPage() {
               Нужна консультация до заявки?{" "}
               <a
                 className="text-[var(--text-primary)] underline decoration-white/20 underline-offset-4 transition hover:decoration-[var(--accent)]/60"
-                href="mailto:hello@elevateinterns.com?subject=Elevate%20Interns%20%E2%80%94%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8F%20%D1%81%20%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%B5%D1%80%D0%BE%D0%BC"
+                href="https://wa.me/77755107079"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Связаться с менеджером в WhatsApp"
               >
                 Связаться с менеджером
               </a>
               <span className="mt-2 block text-[12px] text-[var(--text-muted)]">
-                Ответ команды — в рабочие часы.
+                Ответ команды - в рабочие часы.
               </span>
             </p>
           </div>
