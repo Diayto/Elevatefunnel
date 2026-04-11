@@ -7,6 +7,8 @@
   --text-muted: #8a95a8;
   --accent: #4f7dff;
   --accent-dim: rgba(79, 125, 255, 0.35);
+  /** Обе бегущие строки партнёров (верх + под кейсами) — одна скорость. */
+  --partner-marquee-duration: 46s;
 }
 
 /* Preflight sets a light body background — re-assert dark canvas after Tailwind layers. */
@@ -55,8 +57,12 @@ button:focus-visible {
 }
 
 .partner-marquee {
-  animation: partner-marquee 48s linear infinite;
+  animation: partner-marquee var(--partner-marquee-duration) linear infinite;
   will-change: transform;
+}
+
+.partner-marquee.partner-marquee-force {
+  animation: partner-marquee var(--partner-marquee-duration) linear infinite;
 }
 
 .no-scrollbar {
@@ -87,7 +93,7 @@ main section[id^="act-"] {
 
   /* Keep partner ticker as a real marquee when explicitly requested. */
   .partner-marquee.partner-marquee-force {
-    animation: partner-marquee 46s linear infinite;
+    animation: partner-marquee var(--partner-marquee-duration) linear infinite;
     transform: translateX(0);
     flex-wrap: nowrap;
     justify-content: flex-start;

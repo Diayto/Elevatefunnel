@@ -302,7 +302,7 @@ export function ParticleField({
 
     u.uSandLifecycle.value = H.sandLifecycle;
     u.uLifeSec.value = HERO_LIFE_SEC;
-    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL * (mobileVisual ? 0.52 : 1);
+    u.uPathSpeedMul.value = reducedMotion ? 0.5 : HERO_PATH_SPEED_MUL * (mobileVisual ? 0.4 : 1);
 
     const hs = reducedMotion ? 0.28 : 1;
     u.uHotspot.value.set(hotspot.nx, hotspot.ny, hotspot.nr, hotspot.strength * hs);
@@ -323,7 +323,7 @@ export function ParticleField({
     if (g) {
       const ω = reducedMotion ? GROUP_YAW_SPEED_REDUCED : GROUP_YAW_SPEED;
       const sandLock = 1 - H.sandLifecycle * 0.92;
-      g.rotation.y += delta * ω * sandLock * (mobileVisual ? 0.52 : 1);
+      g.rotation.y += delta * ω * sandLock * (mobileVisual ? 0.38 : 1);
     }
 
     m.blending = THREE.AdditiveBlending;

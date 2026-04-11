@@ -10,6 +10,7 @@ import { ApplyForm } from "@/components/landing/ApplyForm";
 import { FounderSection } from "@/components/landing/FounderSection";
 import { HeroIntro } from "@/components/landing/HeroIntro";
 import { PartnerTicker } from "@/components/landing/PartnerTicker";
+import { CASE_PARTNER_LOGOS } from "@/data/partners";
 import { Reveal } from "@/components/landing/Reveal";
 import { AtmosphereBackdrop } from "@/components/layout/AtmosphereBackdrop";
 import { SiteFooter } from "@/components/layout/SiteFooter";
@@ -69,6 +70,23 @@ export function LandingPage() {
     syncHeroZone();
     window.addEventListener("resize", syncHeroZone, { passive: true });
     return () => window.removeEventListener("resize", syncHeroZone);
+  }, []);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    if (!mq.matches) return;
+
+    const prev = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const t = window.setTimeout(() => {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, 60);
+
+    return () => {
+      window.clearTimeout(t);
+      window.history.scrollRestoration = prev;
+    };
   }, []);
 
   const maxTeamIndex = Math.max(0, MENTORS.length - 2);
@@ -145,12 +163,12 @@ export function LandingPage() {
         >
           <Reveal className="mx-auto max-w-5xl text-center">
           <div>
-            <ActLabel>Партнёры с подтверждёнными результатами</ActLabel>
+            <ActLabel>С подтверждёнными результатами</ActLabel>
             <h2 className="font-[family-name:var(--font-serif)] text-[clamp(1.75rem,4vw,2.5rem)] font-normal tracking-tight text-[var(--text-primary)]">
-              Нам доверяют команды, которые нанимают за границей
+              Партнёры
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)] md:text-base">
-              Реальные партнёрства и реальный контекст найма, без декоративных логотипов.
+              Нам доверяют команды, которые нанимают за границей. Реальные партнёрства и реальный контекст найма, без декоративных логотипов.
             </p>
           </div>
           </Reveal>
@@ -290,18 +308,39 @@ export function LandingPage() {
                       />
                     </div>
                     <div className="mx-auto w-[66%] pt-4">
-                      <p className="font-[family-name:var(--font-serif)] text-[1.45rem] leading-tight text-[var(--text-primary)]">
-                        {m.name}
-                      </p>
-                      <p className="mt-1 text-[13px] leading-relaxed text-[var(--text-primary)]/88">
-                        {m.role}
-                      </p>
-                      <p className="mt-4 text-[12px] leading-relaxed text-[var(--text-muted)]">
-                        {m.intro}
-                      </p>
-                      <p className="mt-4 text-[12px] leading-relaxed text-[var(--text-muted)]">
-                        {m.details.slice(0, 2).join(" ")}
-                      </p>
+                      {m.roleAboveName ? (
+                        <>
+                          <p className="text-[13px] leading-relaxed text-[var(--text-primary)]/88">
+                            {m.role}
+                          </p>
+                          <p className="mt-1 font-[family-name:var(--font-serif)] text-[1.45rem] leading-tight text-[var(--text-primary)]">
+                            {m.name}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p className="font-[family-name:var(--font-serif)] text-[1.45rem] leading-tight text-[var(--text-primary)]">
+                            {m.name}
+                          </p>
+                          <p className="mt-1 text-[13px] leading-relaxed text-[var(--text-primary)]/88">
+                            {m.role}
+                          </p>
+                        </>
+                      )}
+                      {m.intro.trim() ? (
+                        <p className="mt-4 text-[12px] leading-relaxed text-[var(--text-muted)]">
+                          {m.intro}
+                        </p>
+                      ) : null}
+                      {m.details.length > 0 ? (
+                        <div className="mt-4 space-y-3 text-[12px] leading-relaxed text-[var(--text-muted)]">
+                          {m.details.map((block, i) => (
+                            <p key={i} className="whitespace-pre-line">
+                              {block}
+                            </p>
+                          ))}
+                        </div>
+                      ) : null}
                     </div>
                   </article>
                 ))}
@@ -473,6 +512,9 @@ export function LandingPage() {
                   ))}
                 </div>
               </div>
+            </div>
+            <div className="mt-12 md:mt-14">
+              <PartnerTicker logos={CASE_PARTNER_LOGOS} variant="compact" />
             </div>
           </div>
           </Reveal>
