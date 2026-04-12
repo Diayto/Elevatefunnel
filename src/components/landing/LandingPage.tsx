@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import NarrativeCanvas from "@/components/canvas/NarrativeCanvas";
 import { MENTORS } from "@/data/mentors";
 import { TESTIMONIAL_SHORTS } from "@/data/testimonialVideos";
@@ -37,6 +37,8 @@ export function LandingPage() {
   const mentorScrollRef = useRef<HTMLDivElement>(null);
   const [teamIndex, setTeamIndex] = useState(0);
   const [teamAnimating, setTeamAnimating] = useState(false);
+  /** 1 = одна карточка на экран (мобильные), 2 = две карточки (md+) */
+  const [teamCardsPerView, setTeamCardsPerView] = useState<1 | 2>(2);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
   useEffect(() => {
@@ -81,7 +83,38 @@ export function LandingPage() {
     };
   }, []);
 
-  const maxTeamIndex = Math.max(0, MENTORS.length - 2);
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const apply = () => setTeamCardsPerView(mq.matches ? 2 : 1);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
+  useEffect(() => {
+    setTeamIndex((prev) => {
+      const max = Math.max(0, MENTORS.length - teamCardsPerView);
+      return Math.min(prev, max);
+    });
+  }, [teamCardsPerView]);
+
+  useEffect(() => {
+    const scroller = mentorScrollRef.current;
+    if (!scroller) return;
+    const id = requestAnimationFrame(() => {
+      const firstCard = scroller.firstElementChild as HTMLElement | null;
+      if (!firstCard) return;
+      const cardWidth = firstCard.getBoundingClientRect().width;
+      const styles = window.getComputedStyle(scroller);
+      const gap = parseFloat(styles.columnGap || styles.gap || "0") || 0;
+      const step = cardWidth + gap;
+      if (!step) return;
+      scroller.scrollLeft = teamIndex * step;
+    });
+    return () => cancelAnimationFrame(id);
+  }, [teamIndex, teamCardsPerView]);
+
+  const maxTeamIndex = Math.max(0, MENTORS.length - teamCardsPerView);
 
   const getMentorStep = () => {
     const scroller = mentorScrollRef.current;
@@ -281,16 +314,16 @@ export function LandingPage() {
               </div>
               <div
                 ref={mentorScrollRef}
-                className={`no-scrollbar flex-1 flex items-start gap-8 overflow-x-auto pb-2 ${
+                className={`no-scrollbar flex flex-1 items-start gap-4 overflow-x-auto pb-2 md:gap-8 ${
                   teamAnimating ? "snap-none" : "snap-x snap-mandatory"
                 }`}
               >
                 {MENTORS.map((m) => (
                   <article
                     key={m.id}
-                    className="w-[calc((100%-2rem)/2)] min-w-[calc((100%-2rem)/2)] shrink-0 snap-start"
+                    className="w-full min-w-full shrink-0 snap-start md:w-[calc((100%-2rem)/2)] md:min-w-[calc((100%-2rem)/2)]"
                   >
-                    <div className="relative mx-auto aspect-[4/5] w-[66%] overflow-hidden rounded-[12px] border border-white/[0.1] bg-[linear-gradient(180deg,rgba(16,26,40,0.9)_0%,rgba(11,19,32,0.92)_100%)] shadow-[0_20px_60px_-34px_rgba(0,0,0,0.88)]">
+                    <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-[12px] border border-white/[0.1] bg-[linear-gradient(180deg,rgba(16,26,40,0.9)_0%,rgba(11,19,32,0.92)_100%)] shadow-[0_20px_60px_-34px_rgba(0,0,0,0.88)] md:max-w-none md:w-[66%]">
                       <Image
                         src={m.photoSrc}
                         alt={
@@ -299,11 +332,11 @@ export function LandingPage() {
                             : `${m.name}, ${m.role}`
                         }
                         fill
-                        sizes="(min-width: 1024px) 380px, (min-width: 768px) 44vw, 44vw"
+                        sizes="(min-width: 1024px) 380px, (min-width: 768px) 38vw, 90vw"
                         className="object-cover object-center grayscale-[18%]"
                       />
                     </div>
-                    <div className="mx-auto w-[66%] pt-4">
+                    <div className="mx-auto w-full max-w-sm pt-5 md:max-w-none md:w-[66%] md:pt-4">
                       {m.roleAboveName ? (
                         <>
                           <p className="text-[13px] leading-relaxed text-[var(--text-primary)]/88">
@@ -324,12 +357,12 @@ export function LandingPage() {
                         </>
                       )}
                       {m.intro.trim() ? (
-                        <p className="mt-4 text-[12px] leading-relaxed text-[var(--text-muted)]">
+                        <p className="mt-4 text-[13px] leading-relaxed text-[var(--text-muted)] md:text-[12px]">
                           {m.intro}
                         </p>
                       ) : null}
                       {m.details.length > 0 ? (
-                        <div className="mt-4 space-y-3 text-[12px] leading-relaxed text-[var(--text-muted)]">
+                        <div className="mt-4 space-y-3 text-[13px] leading-relaxed text-[var(--text-muted)] md:text-[12px]">
                           {m.details.map((block, i) => (
                             <p key={i} className="whitespace-pre-line">
                               {block}
