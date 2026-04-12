@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Mulish } from "next/font/google";
+import { getSiteMetadataBase } from "@/lib/siteUrl";
 import "./globals.css";
 
 /**
@@ -28,11 +29,12 @@ const interLogo = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: getSiteMetadataBase(),
   title: "Elevate Interns",
   description:
     "Структурированный доступ к международным стажировкам с менторской поддержкой и ИИ.",
   icons: {
-    icon: [{ url: "/favicon.ico", sizes: "48x48 32x32 16x16", type: "image/x-icon" }],
+    icon: "/favicon.ico",
   },
 };
 

@@ -7,7 +7,7 @@ import pngToIco from "png-to-ico";
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const srcPng = path.join(root, "..", "src", "app", "icon.png");
-const outIco = path.join(root, "..", "src", "app", "favicon.ico");
+const outIco = path.join(root, "..", "public", "favicon.ico");
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "elevate-favicon-"));
 const sizes = [16, 32, 48];
 const tmpFiles = [];
