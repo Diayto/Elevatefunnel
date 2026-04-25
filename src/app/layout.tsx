@@ -1,40 +1,36 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Mulish } from "next/font/google";
+import { Inter_Tight } from "next/font/google";
 import { getSiteMetadataBase } from "@/lib/siteUrl";
 import "./globals.css";
 
-/**
- * Mulish (Muli) — основной текст и крупные заголовки.
- * Две CSS-переменные для совместимости с существующими классами (--font-sans / --font-serif).
- */
-const sans = Mulish({
+const interTight = Inter_Tight({
   subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-sans",
+  variable: "--font-inter-tight",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const display = Mulish({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-serif",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-/** Только логотип «Elevate Interns» в шапке — Inter. */
-const interLogo = Inter({
-  subsets: ["latin", "latin-ext", "cyrillic", "cyrillic-ext"],
-  variable: "--font-inter-logo",
-  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   metadataBase: getSiteMetadataBase(),
   title: "Elevate Interns",
   description:
-    "Структурированный доступ к международным стажировкам с менторской поддержкой и ИИ.",
+    "Первая организация в СНГ которая помогает студентам за 45 дней получить международную стажировку в самых топовых компаниях мира.",
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Elevate Interns",
+    description:
+      "Международные стажировки с ментором, системой и фокусом на результат.",
+    siteName: "Elevate Interns",
+    type: "website",
+    locale: "ru_RU",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Elevate Interns",
+    description:
+      "Международные стажировки с ментором, системой и фокусом на результат.",
   },
 };
 
@@ -42,6 +38,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -50,12 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="ru"
-      className={`${sans.variable} ${display.variable} ${interLogo.variable}`}
-      style={{ backgroundColor: "var(--bg-deep)" }}
-    >
-      <body className="min-h-screen bg-[var(--bg-deep)] antialiased font-[family-name:var(--font-sans)]">
+    <html lang="ru" className={interTight.variable}>
+      <body className="min-h-screen bg-black antialiased font-[family-name:var(--font-inter-tight)]">
         {children}
       </body>
     </html>

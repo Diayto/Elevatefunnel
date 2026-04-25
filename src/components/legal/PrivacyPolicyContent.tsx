@@ -1,13 +1,13 @@
-/**
- * Текст политики конфиденциальности ИП «Тлеуғалиұлы» (по редакции PDF).
- */
 export function PrivacyPolicyContent() {
   return (
-    <article className="mx-auto max-w-3xl text-[15px] leading-relaxed text-[var(--text-muted)]">
-      <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--text-muted)]">
+    <article
+      className="text-[15px] leading-[1.7] text-white/60"
+      style={{ fontFamily: "var(--font-inter-tight)" }}
+    >
+      <p className="text-[12px] font-medium uppercase tracking-[0.15em] text-white/40">
         Юридическая информация
       </p>
-      <h1 className="mt-4 font-[family-name:var(--font-serif)] text-3xl font-normal tracking-tight text-[var(--text-primary)] md:text-4xl">
+      <h1 className="mt-4 text-[32px] font-bold leading-[1.2] tracking-tight text-white">
         Политика конфиденциальности и обработки персональных данных
       </h1>
 
@@ -19,7 +19,7 @@ export function PrivacyPolicyContent() {
       <p className="mt-4">
         Действующая редакция настоящей Политики конфиденциальности постоянно доступна для
         ознакомления и размещена в сети Интернет по адресу:{" "}
-        <span className="text-[var(--text-primary)]">elevateintern.com</span>
+        <span className="text-white">elevateintern.com</span>
       </p>
       <p className="mt-4">
         Передавая Оператору персональные и иные данные посредством Сайта, Пользователь
@@ -35,63 +35,61 @@ export function PrivacyPolicyContent() {
         использования Сайта Пользователем.
       </p>
 
-      <h2 className="mt-12 font-[family-name:var(--font-serif)] text-xl font-normal tracking-tight text-[var(--text-primary)] md:text-2xl">
-        1. Термины
-      </h2>
+      <h2 className="mt-12 text-[22px] font-semibold text-white">1. Термины</h2>
       <ul className="mt-6 list-none space-y-4 pl-0">
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.1.</span> Сайт - сайт,
+          <span className="font-medium text-white">1.1.</span> Сайт - сайт,
           расположенный в сети Интернет по адресу elevateintern.com. Все исключительные права
           на Сайт и его отдельные элементы (включая программное обеспечение, дизайн)
           принадлежат Оператору в полном объёме. Передача исключительных прав Пользователю не
           является предметом настоящей Политики конфиденциальности.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.2.</span> Пользователь -
+          <span className="font-medium text-white">1.2.</span> Пользователь -
           лицо, использующее Сайт.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.3.</span> Законодательство
+          <span className="font-medium text-white">1.3.</span> Законодательство
           - действующее законодательство Республики Казахстан.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.4.</span> Персональные
+          <span className="font-medium text-white">1.4.</span> Персональные
           данные - персональные данные Пользователя, которые Пользователь предоставляет
           самостоятельно при регистрации или в процессе использования функционала Сайта.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.5.</span> Данные - иные
+          <span className="font-medium text-white">1.5.</span> Данные - иные
           данные о Пользователе (не входящие в понятие персональных данных).
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.6.</span> Регистрация -
+          <span className="font-medium text-white">1.6.</span> Регистрация -
           заполнение Пользователем Регистрационной формы, расположенной на Сайте, путём
           указания необходимых сведений и отправки сканированных документов.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.7.</span> Регистрационная
+          <span className="font-medium text-white">1.7.</span> Регистрационная
           форма - форма, расположенная на Сайте, которую Пользователь должен заполнить для
           возможности использования сайта в полном объёме.
         </li>
         <li>
-          <span className="font-medium text-[var(--text-primary)]">1.8.</span> Услуга(и) -
+          <span className="font-medium text-white">1.8.</span> Услуга(и) -
           услуги, предоставляемые Оператором на основании соглашения.
         </li>
       </ul>
 
-      <h2 className="mt-12 font-[family-name:var(--font-serif)] text-xl font-normal tracking-tight text-[var(--text-primary)] md:text-2xl">
+      <h2 className="mt-12 text-[22px] font-semibold text-white">
         2. Сбор и обработка персональных данных
       </h2>
       <p className="mt-6">
-        <span className="font-medium text-[var(--text-primary)]">2.1.</span> Оператор собирает
+        <span className="font-medium text-white">2.1.</span> Оператор собирает
         и хранит только те персональные данные, которые необходимы для оказания Услуг
         Оператором и взаимодействия с Пользователем.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">2.2.</span> Персональные
+        <span className="font-medium text-white">2.2.</span> Персональные
         данные могут использоваться в следующих целях:
       </p>
-      <ul className="mt-3 list-disc space-y-2 pl-6">
+      <ul className="mt-3 list-disc space-y-2 pl-6 marker:text-white/30">
         <li>2.2.1 оказание Услуг Пользователю;</li>
         <li>2.2.2 идентификация Пользователя;</li>
         <li>2.2.3 взаимодействие с Пользователем;</li>
@@ -101,45 +99,45 @@ export function PrivacyPolicyContent() {
         <li>2.2.5 проведение статистических и иных исследований;</li>
       </ul>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">2.3.</span> Оператор в том
+        <span className="font-medium text-white">2.3.</span> Оператор в том
         числе обрабатывает следующие данные:
       </p>
-      <ul className="mt-3 list-disc space-y-2 pl-6">
+      <ul className="mt-3 list-disc space-y-2 pl-6 marker:text-white/30">
         <li>2.3.1 фамилия, имя и отчество;</li>
         <li>2.3.2 адрес электронной почты;</li>
         <li>2.3.3 номер телефона (в т.ч. мобильного).</li>
       </ul>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">2.4.</span> Пользователю
+        <span className="font-medium text-white">2.4.</span> Пользователю
         запрещается указывать на Сайте персональные данные третьих лиц (за исключением условия
         представления интересов этих лиц, имея документальное подтверждение третьих лиц на
         осуществление таких действий).
       </p>
 
-      <h2 className="mt-12 font-[family-name:var(--font-serif)] text-xl font-normal tracking-tight text-[var(--text-primary)] md:text-2xl">
+      <h2 className="mt-12 text-[22px] font-semibold text-white">
         3. Порядок обработки персональных и иных данных
       </h2>
       <p className="mt-6">
-        <span className="font-medium text-[var(--text-primary)]">3.1.</span> Оператор обязуется
+        <span className="font-medium text-white">3.1.</span> Оператор обязуется
         использовать персональные данные в соответствии с Законом «О персональных данных»
         Республики Казахстан и внутренними документами Оператора.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">3.2.</span> В отношении
+        <span className="font-medium text-white">3.2.</span> В отношении
         персональных данных и иных Данных Пользователя сохраняется их конфиденциальность,
         кроме случаев, когда указанные данные являются общедоступными.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">3.3.</span> Оператор имеет
+        <span className="font-medium text-white">3.3.</span> Оператор имеет
         право сохранять архивную копию персональных данных. Оператор имеет право хранить
         персональные данные и Данные на серверах вне территории Республики Казахстан.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">3.4.</span> Оператор имеет
+        <span className="font-medium text-white">3.4.</span> Оператор имеет
         право передавать персональные данные и Данные Пользователя без согласия Пользователя
         следующим лицам:
       </p>
-      <ul className="mt-3 list-disc space-y-2 pl-6">
+      <ul className="mt-3 list-disc space-y-2 pl-6 marker:text-white/30">
         <li>
           3.4.1 государственным органам, в том числе органам дознания и следствия, и органам
           местного самоуправления по их мотивированному запросу;
@@ -150,11 +148,11 @@ export function PrivacyPolicyContent() {
         </li>
       </ul>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">3.5.</span> Оператор имеет
+        <span className="font-medium text-white">3.5.</span> Оператор имеет
         право передавать персональные данные и Данные третьим лицам, не указанным в п. 3.4
         настоящей Политики конфиденциальности, в следующих случаях:
       </p>
-      <ul className="mt-3 list-disc space-y-2 pl-6">
+      <ul className="mt-3 list-disc space-y-2 pl-6 marker:text-white/30">
         <li>3.5.1 Пользователь выразил своё согласие на такие действия;</li>
         <li>
           3.5.2 передача необходима в рамках использования Пользователем Сайта или оказания
@@ -162,37 +160,37 @@ export function PrivacyPolicyContent() {
         </li>
       </ul>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">3.6.</span> Оператор
+        <span className="font-medium text-white">3.6.</span> Оператор
         осуществляет автоматизированную обработку персональных данных и Данных.
       </p>
 
-      <h2 className="mt-12 font-[family-name:var(--font-serif)] text-xl font-normal tracking-tight text-[var(--text-primary)] md:text-2xl">
+      <h2 className="mt-12 text-[22px] font-semibold text-white">
         4. Защита персональных данных
       </h2>
       <p className="mt-6">
-        <span className="font-medium text-[var(--text-primary)]">4.1.</span> Оператор
+        <span className="font-medium text-white">4.1.</span> Оператор
         осуществляет надлежащую защиту персональных и иных данных в соответствии с
         Законодательством и принимает необходимые и достаточные организационные и технические
         меры для защиты персональных данных.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">4.2.</span> Применяемые меры
+        <span className="font-medium text-white">4.2.</span> Применяемые меры
         защиты в том числе позволяют защитить персональные данные от неправомерного или
         случайного доступа, уничтожения, изменения, блокирования, копирования, распространения,
         а также от иных неправомерных действий с ними третьих лиц.
       </p>
 
-      <h2 className="mt-12 font-[family-name:var(--font-serif)] text-xl font-normal tracking-tight text-[var(--text-primary)] md:text-2xl">
+      <h2 className="mt-12 text-[22px] font-semibold text-white">
         5. Иные положения
       </h2>
       <p className="mt-6">
-        <span className="font-medium text-[var(--text-primary)]">5.1.</span> К настоящей
+        <span className="font-medium text-white">5.1.</span> К настоящей
         Политике конфиденциальности и отношениям между Пользователем и Оператором, возникающим
         в связи с применением Политики конфиденциальности, подлежит применению право Республики
         Казахстан.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">5.2.</span> Все возможные
+        <span className="font-medium text-white">5.2.</span> Все возможные
         споры, вытекающие из настоящего Соглашения, подлежат разрешению в соответствии с
         действующим законодательством по месту регистрации Оператора. Перед обращением в суд
         Пользователь должен соблюсти обязательный досудебный порядок и направить Оператору
@@ -200,45 +198,47 @@ export function PrivacyPolicyContent() {
         (тридцать) рабочих дней.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">5.3.</span> Если по тем или
+        <span className="font-medium text-white">5.3.</span> Если по тем или
         иным причинам одно или несколько положений Политики конфиденциальности будут признаны
         недействительными или не имеющими юридической силы, это не оказывает влияния на
         действительность или применимость остальных положений Политики конфиденциальности.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">5.4.</span> Оператор имеет
+        <span className="font-medium text-white">5.4.</span> Оператор имеет
         право в любой момент изменять Политику конфиденциальности (полностью или в части) в
         одностороннем порядке без предварительного согласования с Пользователем. Все изменения
         вступают в силу с момента её размещения на Сайте.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">5.5.</span> Пользователь
+        <span className="font-medium text-white">5.5.</span> Пользователь
         обязуется самостоятельно следить за изменениями Политики конфиденциальности путём
         ознакомления с актуальной редакцией.
       </p>
       <p className="mt-4">
-        <span className="font-medium text-[var(--text-primary)]">5.6.</span> Все предложения
+        <span className="font-medium text-white">5.6.</span> Все предложения
         или вопросы по настоящей Политике конфиденциальности следует сообщать по электронной
         почте ИП «Тлеуғалиұлы» или по телефонам:{" "}
         <a
           href="tel:+77058070846"
-          className="text-[var(--accent)] underline-offset-4 transition hover:underline"
+          className="text-[#4a8fff] underline-offset-4 transition hover:underline"
         >
           +7 705 807 0846
         </a>
         .
       </p>
 
-      <p className="mt-12 border-t border-white/[0.08] pt-10 text-[13px] text-[var(--text-muted)]">
-        Официальный документ в формате PDF:{" "}
-        <a
-          href="/legal/politika-konfidencialnosti-ip-tleugaliuly.pdf"
-          className="text-[var(--accent)] underline-offset-4 transition hover:underline"
-          download
-        >
-          Скачать политику (PDF)
-        </a>
-      </p>
+      <div className="mt-12 border-t border-white/10 pt-8">
+        <p className="text-[13px] text-white/40">
+          Официальный документ в формате PDF:{" "}
+          <a
+            href="/legal/politika-konfidencialnosti-ip-tleugaliuly.pdf"
+            className="text-[#4a8fff] underline-offset-4 transition hover:underline"
+            download
+          >
+            Скачать политику (PDF)
+          </a>
+        </p>
+      </div>
     </article>
   );
 }

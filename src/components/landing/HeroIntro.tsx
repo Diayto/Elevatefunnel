@@ -1,111 +1,143 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import {
-  heroContainerVariants,
-  heroItemVariants,
-} from "@/lib/motion/presets";
-import { useReducedMotionSafe } from "@/lib/motion/useReducedMotionSafe";
+import Image from "next/image";
 
 export function HeroIntro() {
-  const reduced = useReducedMotionSafe();
-  const item = heroItemVariants(reduced);
-  const container = heroContainerVariants(reduced);
-  const [heroIn, setHeroIn] = useState(false);
-  const [secondsLeft, setSecondsLeft] = useState(180);
-  const [showOffer, setShowOffer] = useState(false);
-
-  useEffect(() => {
-    setHeroIn(true);
-  }, []);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (localStorage.getItem("elevate-offer-popup-shown") === "1") return;
-    if (secondsLeft <= 0) {
-      setShowOffer(true);
-      localStorage.setItem("elevate-offer-popup-shown", "1");
-      return;
-    }
-    const timer = window.setInterval(() => {
-      setSecondsLeft((prev) => (prev > 0 ? prev - 1 : 0));
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, [secondsLeft]);
-
-  const mm = String(Math.floor(secondsLeft / 60)).padStart(1, "0");
-  const ss = String(secondsLeft % 60).padStart(2, "0");
-
   return (
-    <motion.div
+    <div
       id="act-hero-content"
-      className="relative z-10 max-w-3xl"
-      variants={container}
-      initial="hidden"
-      animate={heroIn ? "visible" : "hidden"}
+      className="relative mx-auto w-full overflow-x-clip bg-black lg:min-h-[760px]"
+      style={{
+        fontFamily: "var(--font-inter-tight)",
+      }}
     >
-      <motion.p
-        variants={item}
-        className="mb-4 text-[13px] font-medium uppercase tracking-[0.22em] text-[var(--text-muted)]"
+      {/* Blob top-right (blob-1) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute select-none max-lg:opacity-75"
+        style={{
+          right: "-140px",
+          top: "-135px",
+          width: "761px",
+          height: "749px",
+          zIndex: 1,
+          opacity: 0.9,
+          transform: "rotate(-120.88deg) scaleY(-1)",
+        }}
       >
-        Системная программа
-      </motion.p>
-      <motion.h1
-        variants={item}
-        className="font-[family-name:var(--font-serif)] text-[clamp(2.12rem,4.95vw,3.6rem)] font-normal leading-[1.06] tracking-[-0.02em] text-[var(--text-primary)] text-balance"
-      >
-        Международные стажировки и глобальные возможности - системный путь к
-        сильной карьере.
-      </motion.h1>
-      <motion.p
-        variants={item}
-        className="mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] md:text-lg"
-      >
-        Для студентов 1-4 курса: чёткий маршрут на 7 недель, поддержка ментора
-        и помощь AI-ассистента на каждом шаге.
-      </motion.p>
-      <motion.div variants={item} className="mt-8 flex flex-wrap gap-3 sm:gap-4">
-        <a
-          href="#act-apply"
-          className="inline-flex items-center justify-center rounded-sm border border-[var(--accent)] bg-[var(--accent)] px-7 py-3.5 text-sm font-medium text-[var(--bg-deep)] transition hover:bg-transparent hover:text-[var(--text-primary)] sm:px-8"
-        >
-          Подать заявку
-        </a>
-        <a
-          href="#act-route"
-          className="inline-flex items-center justify-center rounded-sm border border-white/15 px-7 py-3.5 text-sm font-medium text-[var(--text-primary)] transition hover:border-[var(--accent-dim)] sm:px-8"
-        >
-          Как это устроено
-        </a>
-      </motion.div>
-      <motion.div variants={item} className="mt-5 inline-flex items-center gap-3 rounded-sm border border-white/12 bg-white/[0.03] px-4 py-2.5">
-        <span className="text-[11px] uppercase tracking-[0.16em] text-[var(--text-muted)]">Окно предложения</span>
-        <span className="text-sm font-semibold text-[var(--accent)]">{mm}:{ss}</span>
-      </motion.div>
+        <Image
+          src="/figma/gradients/blob-1.svg"
+          alt=""
+          width={761}
+          height={749}
+          priority={false}
+          className="h-full w-full max-lg:scale-[0.55]"
+        />
+      </div>
 
-      {showOffer ? (
-        <div className="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center bg-black/55 px-5">
-          <div className="pointer-events-auto w-full max-w-md rounded-sm border border-white/15 bg-[var(--bg-mid)] p-6 shadow-[0_24px_80px_-32px_rgba(0,0,0,0.85)]">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--accent)]">Спецпредложение</p>
-            <p className="mt-3 text-2xl font-[family-name:var(--font-serif)] text-[var(--text-primary)]">
-              Скидка 20% на участие
-            </p>
-            <p className="mt-3 text-[14px] leading-relaxed text-[var(--text-muted)]">
-              Оставьте заявку сейчас и команда зафиксирует условия в диалоге.
-            </p>
-            <div className="mt-5 flex justify-end">
-              <button
-                type="button"
-                onClick={() => setShowOffer(false)}
-                className="rounded-sm border border-[var(--accent)]/40 px-4 py-2 text-sm font-medium text-[var(--text-primary)] transition hover:bg-[var(--accent)]/12"
-              >
-                Понятно
-              </button>
-            </div>
-          </div>
+      {/* Blob bottom-left (blob-2) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute select-none max-lg:opacity-75"
+        style={{
+          left: "-303px",
+          bottom: "-204px",
+          width: "746px",
+          height: "707px",
+          zIndex: 1,
+          opacity: 0.9,
+          transform: "rotate(167.68deg) scaleY(-1)",
+        }}
+      >
+        <Image
+          src="/figma/gradients/blob-2.svg"
+          alt=""
+          width={746}
+          height={707}
+          priority={false}
+          className="h-full w-full max-lg:scale-[0.5]"
+        />
+      </div>
+
+      {/* Grid — на мобилке меньше и слабее, как в Figma */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-[140px] z-[2] h-[min(320px,46vh)] w-[min(92vw,420px)] select-none opacity-35 sm:top-[160px] lg:top-[220px] lg:h-[480px] lg:w-[660px] lg:opacity-55"
+      >
+        <Image
+          src="/figma/gradients/grid-1.svg"
+          alt=""
+          width={660}
+          height={480}
+          priority={false}
+          className="h-full w-full object-cover object-right"
+        />
+      </div>
+
+      {/* До lg — колонка (текст 328px, изометрия ниже); lg+ — как на десктопе */}
+      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-col items-center px-4 pb-10 pt-[104px] sm:pt-[112px] lg:flex-row lg:items-start lg:justify-between lg:px-8 lg:pb-0 lg:pt-[170px]">
+        <div className="fade-up relative z-[6] flex w-full max-w-[328px] shrink-0 flex-col lg:max-w-[720px] lg:self-start">
+          <h1
+            className="break-words text-[24px] font-normal leading-[1.25] tracking-[-0.008em] text-white lg:text-[44px] lg:leading-[1.15] lg:tracking-[-0.01em]"
+            style={{
+              fontFamily: "var(--font-inter-tight)",
+              textShadow: "0px 4px 24px rgba(0,0,0,0.35)",
+            }}
+          >
+            Первая организация в СНГ которая помогает студентам{" "}
+            <span
+              className="bg-clip-text font-semibold text-transparent"
+              style={{
+                fontFamily: "var(--font-inter-tight)",
+                backgroundImage:
+                  "linear-gradient(90deg, #19A8EA 35.096%, #006FFF 62.981%)",
+              }}
+            >
+              за 45 дней получить международную стажировку
+            </span>{" "}
+            в самых топовых компаниях мира.
+          </h1>
+
+          <p
+            className="mt-4 max-w-full text-pretty text-[16px] leading-[1.35] text-white/95 lg:mt-5 lg:max-w-[520px] lg:text-[20px] lg:leading-[1.4]"
+            style={{
+              fontFamily: "var(--font-inter-tight)",
+              textShadow: "0px 0px 15px black",
+            }}
+          >
+            Наши студенты проходят стажировки в AIFC, Samsung, Mastercard, Big4,
+            ООН и других топ-компаниях
+          </p>
+
+          <a
+            href="#act-apply"
+            className="glow-btn mt-6 inline-flex w-full max-w-[328px] items-center justify-center rounded-full text-[16px] font-semibold leading-6 text-white sm:w-auto lg:mt-10 lg:max-w-none lg:w-fit lg:text-[17px]"
+            style={{
+              fontFamily: "var(--font-inter-tight)",
+              paddingInline: "30px",
+              paddingBlock: "10px",
+              letterSpacing: "-0.3px",
+              backgroundImage:
+                "linear-gradient(180deg, #3D9EFF 0%, #053BE5 15%, #053BE5 85%, #0078F0 100%)",
+              border: "1px solid #0080FF",
+              boxShadow: "0px 0px 18px 0px #4675FF",
+              fontFeatureSettings: "'zero' 1",
+            }}
+          >
+            Получить бесплатный урок
+          </a>
         </div>
-      ) : null}
-    </motion.div>
+
+        <div className="pointer-events-none relative z-[5] mt-6 w-full max-w-[min(100%,375px)] shrink-0 select-none lg:absolute lg:right-4 lg:top-[220px] lg:mt-0 lg:h-[470px] lg:w-[640px] lg:max-w-none">
+          <Image
+            src="/figma/graphics/hero-image-desktop.svg"
+            alt="Маршрут: Discipline → Skills → Resume → Interview → Internship → Career"
+            width={640}
+            height={470}
+            priority
+            className="mx-auto h-auto w-full lg:mx-0 lg:h-full lg:w-full"
+            sizes="(max-width: 1023px) 360px, 640px"
+          />
+        </div>
+      </div>
+    </div>
   );
 }
