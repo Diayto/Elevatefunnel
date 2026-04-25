@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { SectionDecor } from "@/components/landing/SectionDecor";
 
 type Student = {
@@ -86,18 +86,29 @@ const STUDENTS: Student[] = [
   },
 ];
 
-const PER_PAGE = 3;
-
 const PHOTO_SIZES =
   "(max-width: 767px) min(92vw, 400px), (max-width: 1200px) calc((100vw - 6rem) / 3), 380px";
 
 export function StudentsSection() {
+  const [perPage, setPerPage] = useState(3);
   const [page, setPage] = useState(0);
-  const pageCount = Math.ceil(STUDENTS.length / PER_PAGE);
+  const pageCount = Math.ceil(STUDENTS.length / perPage);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setPerPage(mq.matches ? 1 : 3);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    setPage((p) => Math.min(p, Math.max(0, pageCount - 1)));
+  }, [pageCount]);
 
   const visible = useMemo(
-    () => STUDENTS.slice(page * PER_PAGE, page * PER_PAGE + PER_PAGE),
-    [page],
+    () => STUDENTS.slice(page * perPage, page * perPage + perPage),
+    [page, perPage],
   );
 
   const go = useCallback(
