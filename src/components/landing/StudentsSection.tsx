@@ -84,6 +84,34 @@ const STUDENTS: Student[] = [
     photoSrc: "/figma/students/Image.jpg",
     companyName: "Топ-работодатель",
   },
+  {
+    id: "student-11",
+    name: "Бирханым",
+    description: "Стажировка в Kazakh-telecom",
+    photoSrc: "/figma/students/Image-10.png",
+    companyName: "Business analyst",
+  },
+  {
+    id: "student-12",
+    name: "Свята",
+    description: "Стажировка в ii.agency",
+    photoSrc: "/figma/students/Image-11.png",
+    companyName: "Monaco",
+  },
+  {
+    id: "student-13",
+    name: "Нурбол",
+    description: "Стажировка в Most ventures",
+    photoSrc: "/figma/students/Image-12.png",
+    companyName: "За-рубежом",
+  },
+  {
+    id: "student-14",
+    name: "Ерхан",
+    description: "Стажировка в ООН",
+    photoSrc: "/figma/students/Image-13.png",
+    companyName: "стажировка",
+  },
 ];
 
 const PHOTO_SIZES =
