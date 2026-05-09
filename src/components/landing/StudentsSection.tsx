@@ -112,6 +112,13 @@ const STUDENTS: Student[] = [
     photoSrc: "/figma/students/Image-13.png",
     companyName: "стажировка",
   },
+  {
+    id: "student-15",
+    name: "Мирон",
+    description: "Стажировка в Launch-x",
+    photoSrc: "/figma/students/miron-launch-x.png",
+    companyName: "Launch X",
+  },
 ];
 
 const PHOTO_SIZES =
