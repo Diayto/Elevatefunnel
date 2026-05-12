@@ -115,7 +115,7 @@ const STUDENTS: Student[] = [
   {
     id: "student-15",
     name: "Мирон",
-    description: "Стажировка в Launch-x",
+    description: "Программа MIT Launch-X",
     photoSrc: "/figma/students/miron-launch-x.png",
     companyName: "Launch X",
   },
