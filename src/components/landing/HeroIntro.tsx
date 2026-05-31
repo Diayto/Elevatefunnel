@@ -103,7 +103,7 @@ export function HeroIntro() {
               textShadow: "0px 0px 15px black",
             }}
           >
-            Наши студенты проходят стажировки в AIFC, Samsung, Mastercard, Big4,
+            Наши студенты работают в AIFC, Samsung, Mastercard, Big4,
             ООН и других топ-компаниях
           </p>
 

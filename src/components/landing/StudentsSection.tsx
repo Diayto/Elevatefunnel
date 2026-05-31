@@ -31,7 +31,7 @@ const STUDENTS: Student[] = [
   {
     id: "student-3",
     name: "Алишер",
-    description: "Стажировка в ABC Studio",
+    description: "Работа в ABC Studio Moscow",
     photoSrc: "/figma/students/Image-3.jpg",
     companyName: "Mastercard",
   },
@@ -45,7 +45,7 @@ const STUDENTS: Student[] = [
   {
     id: "student-5",
     name: "Сабина",
-    description: "Стажировка в MARS",
+    description: "Работа Product Manager в MARS",
     photoSrc: "/figma/students/Image-5.jpg",
     companyName: "IT",
   },
@@ -94,7 +94,7 @@ const STUDENTS: Student[] = [
   {
     id: "student-12",
     name: "Свята",
-    description: "Стажировка в ii.agency",
+    description: "Стажировка в ii.agency Monaco",
     photoSrc: "/figma/students/Image-11.png",
     companyName: "Monaco",
   },
