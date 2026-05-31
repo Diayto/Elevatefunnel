@@ -75,7 +75,7 @@ export function ApplyForm() {
             );
           } else if (data.error === "duplicate_request") {
             setErrorMessage(
-              "Похоже, вы уже отправили заявку. Подождите 2–3 минуты перед повторной отправкой.",
+              "Похоже, вы уже отправили заявку. Подождите 2-3 минуты перед повторной отправкой.",
             );
           } else if (data.error === "invalid_phone") {
             setErrorMessage(

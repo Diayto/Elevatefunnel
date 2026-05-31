@@ -119,6 +119,13 @@ const STUDENTS: Student[] = [
     photoSrc: "/figma/students/miron-launch-x.png",
     companyName: "Launch X",
   },
+  {
+    id: "student-16",
+    name: "Алмас",
+    description: "nFactorial Incubator на грант",
+    photoSrc: "/figma/students/almas-nfactorial.jpg",
+    companyName: "nFactorial",
+  },
 ];
 
 const PHOTO_SIZES =
