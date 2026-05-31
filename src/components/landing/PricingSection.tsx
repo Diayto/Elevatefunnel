@@ -20,7 +20,6 @@ type PricingTier = {
   title: string;
   audienceBadge: string;
   subtitle: string;
-  price: number;
   style: TierStyle;
   bestChoice?: boolean;
   features: Feature[];
@@ -129,7 +128,6 @@ const TIERS: PricingTier[] = [
     audienceBadge: "Для студентов",
     subtitle:
       "Оптимальный темп с плотной обратной связью и сопровождением.",
-    price: 40_000,
     style: "gold",
     features: GOLD_FEATURES,
     highlightBoxes: [
@@ -150,7 +148,6 @@ const TIERS: PricingTier[] = [
     audienceBadge: "Премиум - для всех",
     subtitle:
       "Максимум персонализации и приоритетная индивидуальная работа.",
-    price: 350_000,
     style: "diamond",
     bestChoice: true,
     features: [],
@@ -391,10 +388,6 @@ const HIGHLIGHT_BOX_STYLES: Record<
   },
 };
 
-function formatPrice(amount: number) {
-  return amount.toLocaleString("ru-RU");
-}
-
 function FeatureText({
   parts,
   accent,
@@ -482,21 +475,6 @@ function HighlightBoxCard({ box }: { box: HighlightBox }) {
       <p className="text-[14px] leading-[1.45] text-white/85">
         <FeatureText parts={box.parts} accent={style.accent} />
       </p>
-    </div>
-  );
-}
-
-function PriceBlock({ price }: { price: number }) {
-  return (
-    <div className="mt-5 flex items-baseline gap-1.5">
-      <span
-        className="font-semibold leading-none text-white"
-        style={{ fontSize: "36px", letterSpacing: "-0.02em" }}
-      >
-        <span className="mr-1.5 text-[30px] font-medium">₸</span>
-        {formatPrice(price)}
-      </span>
-      <span className="text-[15px] text-white/45">/ месяц</span>
     </div>
   );
 }
@@ -633,11 +611,9 @@ function TierCard({ tier }: { tier: PricingTier }) {
 
         <p className="mt-3 text-[15px] leading-[1.4] text-white/55">{tier.subtitle}</p>
 
-        <PriceBlock price={tier.price} />
-
         <a
           href="#act-apply"
-          className="glow-btn mt-5 flex h-[48px] w-full items-center justify-center rounded-full border text-[15px] font-semibold text-white transition-colors"
+          className="glow-btn mt-6 flex h-[48px] w-full items-center justify-center rounded-full border text-[15px] font-semibold text-white transition-colors"
           style={{
             borderColor: isGold ? "rgba(250, 255, 0, 0.28)" : "rgba(70, 117, 255, 0.35)",
             background: isGold ? "rgba(250, 255, 0, 0.06)" : "rgba(70, 117, 255, 0.08)",
