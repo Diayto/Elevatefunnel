@@ -82,7 +82,7 @@ export function HeroIntro() {
               textShadow: "0px 4px 24px rgba(0,0,0,0.35)",
             }}
           >
-            Первая организация в СНГ которая помогает студентам{" "}
+            Первая организация в СНГ которая помогает{" "}
             <span
               className="bg-clip-text font-semibold text-transparent"
               style={{
@@ -91,7 +91,7 @@ export function HeroIntro() {
                   "linear-gradient(90deg, #19A8EA 35.096%, #006FFF 62.981%)",
               }}
             >
-              за 45 дней получить международную стажировку
+              за 45 дней получить международную работу и стажировку
             </span>{" "}
             в самых топовых компаниях мира.
           </h1>
@@ -104,7 +104,7 @@ export function HeroIntro() {
             }}
           >
             Наши студенты работают в AIFC, Samsung, Mastercard, Big4,
-            ООН и других топ-компаниях
+            ООН и других топ-компаниях.
           </p>
 
           <a
