@@ -134,6 +134,20 @@ const STUDENTS: Student[] = [
     photoSrc: "/figma/students/zhibek-meloman.jpg",
     companyName: "Meloman",
   },
+  {
+    id: "student-18",
+    name: "Елизавета",
+    description: "Стажировка в US Bank, Warszawa",
+    photoSrc: "/figma/students/elizaveta-usbank.png",
+    companyName: "US Bank",
+  },
+  {
+    id: "student-19",
+    name: "Асан",
+    description: "Стажировка в AIFC, Industry Analysis",
+    photoSrc: "/figma/students/asan-aifc.png",
+    companyName: "AIFC",
+  },
 ];
 
 const PHOTO_SIZES =
