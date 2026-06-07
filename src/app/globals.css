@@ -150,25 +150,6 @@ main section[id^="act-"] {
   color: transparent;
 }
 
-/* ===== Accent section icon box ===== */
-.section-icon-box {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 16px;
-  background: rgba(17, 17, 17, 0.5);
-  border: 1px solid #0078f0;
-  box-shadow: 0 0 24px -6px rgba(0, 120, 240, 0.45);
-  transition: box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.section-icon-box:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 32px -4px rgba(0, 120, 240, 0.65);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .lift-card {
     will-change: transform;
@@ -181,14 +162,12 @@ main section[id^="act-"] {
 
 @media (hover: none), (pointer: coarse), (max-width: 768px) {
   .lift-card,
-  .glow-btn,
-  .section-icon-box {
+  .glow-btn {
     transition-duration: 0.18s;
   }
 
   .lift-card:hover,
-  .glow-btn:hover,
-  .section-icon-box:hover {
+  .glow-btn:hover {
     transform: none;
     filter: none;
     box-shadow: none;

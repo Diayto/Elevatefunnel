@@ -155,14 +155,13 @@ export function FaqSection() {
       <div className="relative mx-auto max-w-[1200px] px-8">
         {/* Icon */}
         <div className="flex justify-center">
-          <span className="section-icon-box">
-            <Image
-              src="/figma/icons/faqs-icon.svg"
-              alt=""
-              width={24}
-              height={24}
-            />
-          </span>
+          <Image
+            src="/figma/icons/faqs-icon.svg"
+            alt=""
+            width={48}
+            height={48}
+            className="transition-transform duration-500 hover:scale-110"
+          />
         </div>
 
         {/* Heading */}

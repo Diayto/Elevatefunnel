@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { SectionDecor } from "@/components/landing/SectionDecor";
+import { StudentCompaniesMarquee } from "@/components/landing/StudentCompaniesMarquee";
 
 type Student = {
   id: string;
@@ -182,9 +183,13 @@ export function StudentsSection() {
       />
       <div className="relative mx-auto max-w-[1200px] px-8">
         <div className="flex justify-center">
-          <span className="section-icon-box">
-            <Image src="/figma/icons/students-icon.svg" alt="" width={24} height={24} />
-          </span>
+          <Image
+            src="/figma/icons/students-icon.svg"
+            alt=""
+            width={48}
+            height={48}
+            className="transition-transform duration-500 hover:scale-110"
+          />
         </div>
 
         <h2
@@ -295,6 +300,8 @@ export function StudentsSection() {
           </div>
         </div>
       </div>
+
+      <StudentCompaniesMarquee />
     </section>
   );
 }
