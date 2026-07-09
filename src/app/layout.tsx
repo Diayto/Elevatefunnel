@@ -15,25 +15,25 @@ const interTight = Inter_Tight({
 
 export const metadata: Metadata = {
   metadataBase: getSiteMetadataBase(),
-  title: "Elevate Interns",
+  title: "Стратегическая сессия | Elevate Interns",
   description:
-    "Первая организация в СНГ которая помогает за 45 дней получить международную работу и стажировку в самых топовых компаниях мира.",
+    "Стратегическая сессия от Elevate.Interns: международные стажировки, разбор профиля и пошаговый план для студентов 1–4 курса.",
   icons: {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "Elevate Interns",
+    title: "Стратегическая сессия | Elevate Interns",
     description:
-      "Международные стажировки с ментором, системой и фокусом на результат.",
+      "Персональный разбор профиля и план получения международной стажировки.",
     siteName: "Elevate Interns",
     type: "website",
     locale: "ru_RU",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Elevate Interns",
+    title: "Стратегическая сессия | Elevate Interns",
     description:
-      "Международные стажировки с ментором, системой и фокусом на результат.",
+      "Персональный разбор профиля и план получения международной стажировки.",
   },
 };
 

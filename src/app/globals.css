@@ -42,8 +42,23 @@ button:focus-visible {
   display: none;
 }
 
-main section[id^="act-"] {
-  scroll-margin-top: max(2.5rem, calc(env(safe-area-inset-top, 0px) + 3rem));
+main section[id^="act-"],
+main [id^="act-"] {
+  scroll-margin-top: max(6.5rem, calc(env(safe-area-inset-top, 0px) + 7rem));
+}
+
+.funnel-progress-segment {
+  height: 3px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.2);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.funnel-progress-segment.is-active {
+  background: linear-gradient(180deg, #3d9eff 0%, #053be5 50%, #0078f0 100%);
+  box-shadow: 0 0 18px 0 #4675ff;
 }
 
 /* ===== Partner marquee ===== */
