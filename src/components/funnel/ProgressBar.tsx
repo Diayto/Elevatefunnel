@@ -5,6 +5,7 @@ import { FUNNEL_STEPS, type FunnelStep } from "@/lib/funnel/config";
 
 type ProgressBarProps = {
   formSubmitted: boolean;
+  progressHydrated?: boolean;
 };
 
 function resolveActiveStep(entries: { id: string; ratio: number }[], formSubmitted: boolean): FunnelStep {
@@ -24,7 +25,7 @@ function resolveActiveStep(entries: { id: string; ratio: number }[], formSubmitt
   return "offer";
 }
 
-export function ProgressBar({ formSubmitted }: ProgressBarProps) {
+export function ProgressBar({ formSubmitted, progressHydrated = true }: ProgressBarProps) {
   const [activeStep, setActiveStep] = useState<FunnelStep>("offer");
 
   useEffect(() => {
@@ -32,6 +33,8 @@ export function ProgressBar({ formSubmitted }: ProgressBarProps) {
       setActiveStep("done");
       return;
     }
+
+    if (!progressHydrated) return;
 
     const sectionIds = ["act-offer", "act-video", "act-warmup", "act-cases", "act-form"];
     const elements = sectionIds
@@ -58,7 +61,7 @@ export function ProgressBar({ formSubmitted }: ProgressBarProps) {
 
     for (const el of elements) observer.observe(el);
     return () => observer.disconnect();
-  }, [formSubmitted]);
+  }, [formSubmitted, progressHydrated]);
 
   const activeIndex = FUNNEL_STEPS.findIndex((s) => s.id === activeStep);
 

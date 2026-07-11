@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { CasesSection } from "@/components/funnel/CasesSection";
 import { LeadFormSection } from "@/components/funnel/LeadFormSection";
 import { OfferHero } from "@/components/funnel/OfferHero";
@@ -9,16 +8,17 @@ import { VideoQuestionsSection } from "@/components/funnel/VideoQuestionsSection
 import { WarmupSection } from "@/components/funnel/WarmupSection";
 import { FunnelFooter } from "@/components/layout/FunnelFooter";
 import { FunnelHeader } from "@/components/layout/FunnelHeader";
+import { useLeadFormSubmitted } from "@/lib/funnel/useLeadFormSubmitted";
 import { useVideoWatchProgress } from "@/lib/funnel/useVideoWatchProgress";
 
 export function FunnelPage() {
   const { state, watchedCount, allWatched, markWatched } = useVideoWatchProgress();
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const { submitted: formSubmitted, hydrated, markSubmitted } = useLeadFormSubmitted();
 
   return (
     <>
       <FunnelHeader />
-      <ProgressBar formSubmitted={formSubmitted} />
+      <ProgressBar formSubmitted={formSubmitted} progressHydrated={hydrated} />
 
       <main className="relative z-10 overflow-x-clip bg-black pt-[120px] sm:pt-[124px] lg:pt-[100px]">
         <OfferHero />
@@ -30,7 +30,7 @@ export function FunnelPage() {
         />
         <WarmupSection />
         <CasesSection />
-        <LeadFormSection watchState={state} onSubmitted={() => setFormSubmitted(true)} />
+        <LeadFormSection watchState={state} onSubmitted={markSubmitted} />
 
         <div className="mx-auto max-w-[1200px] px-8">
           <div className="h-px bg-white/10" />
