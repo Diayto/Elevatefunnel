@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { FUNNEL_SECTION_IDS } from "@/lib/funnel/config";
 
 export function FunnelFooter() {
@@ -17,17 +18,22 @@ export function FunnelFooter() {
             className="mt-4 max-w-[360px] text-[14px] leading-[1.5] text-white/60"
             style={{ fontFamily: "var(--font-inter-tight)" }}
           >
-            Стратегическая сессия: международные стажировки, разбор профиля и
-            план действий.
+            Стратегическая сессия: международные стажировки, разбор профиля и план действий.
           </p>
         </div>
-        <div className="flex flex-col items-end gap-3">
+        <div className="flex flex-col items-start gap-3 md:items-end">
           <a
             href={`#${FUNNEL_SECTION_IDS.form}`}
             className="hover-underline text-[16px] text-white/90 transition hover:text-white"
           >
             Записаться на сессию
           </a>
+          <Link
+            href="/privacy"
+            className="text-[14px] text-white/55 transition hover:text-white"
+          >
+            Политика конфиденциальности
+          </Link>
           <p
             className="text-[14px] text-white/40"
             style={{ fontFamily: "var(--font-inter-tight)" }}

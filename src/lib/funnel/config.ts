@@ -38,6 +38,29 @@ export const QUESTION_VIDEOS: QuestionVideo[] = [
   { id: "q6", question: "[ЗАПОЛНИТЬ] Вопрос 6", videoUrl: "" },
 ];
 
+/** Единая очередь видео сверху вниз: основное → 6 вопросов. */
+export type FunnelVideoItem = {
+  id: VideoWatchKey;
+  step: number;
+  title: string;
+  videoUrl: string;
+};
+
+export const FUNNEL_VIDEO_QUEUE: FunnelVideoItem[] = [
+  {
+    id: "main",
+    step: 1,
+    title: "Основное видео",
+    videoUrl: MAIN_VIDEO_URL,
+  },
+  ...QUESTION_VIDEOS.map((item, index) => ({
+    id: item.id,
+    step: index + 2,
+    title: item.question,
+    videoUrl: item.videoUrl,
+  })),
+];
+
 export type StudentCase = {
   id: string;
   name: string;
@@ -46,69 +69,48 @@ export type StudentCase = {
   videoUrl?: string;
 };
 
-/** Кейсы студентов — замените плейсхолдеры на контент из Instagram. */
+/** Заглушка для карточки кейса, если фото не задано или не загрузилось. */
+export const CASE_PLACEHOLDER_PHOTO = "/figma/graphics/case-placeholder.svg";
+
+/** Кейсы студентов — топ-6 из основного лендинга Elevate. */
 export const STUDENT_CASES: StudentCase[] = [
   {
-    id: "case-1",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-1.jpg",
+    id: "case-miron",
+    name: "Мирон",
+    result: "Программа MIT Launch-X",
+    photoUrl: "/figma/students/miron-launch-x.png",
   },
   {
-    id: "case-2",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-2.jpg",
+    id: "case-erhan",
+    name: "Ерхан",
+    result: "Стажировка в ООН",
+    photoUrl: "/figma/students/Image-13.png",
   },
   {
-    id: "case-3",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-3.jpg",
+    id: "case-aruzhan-kpmg",
+    name: "Аружан",
+    result: "KPMG Audit Internship",
+    photoUrl: "/figma/students/aruzhan-kpmg.png",
   },
   {
-    id: "case-4",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-4.jpg",
+    id: "case-elizaveta",
+    name: "Елизавета",
+    result: "Стажировка в US Bank, Warszawa",
+    photoUrl: "/figma/students/elizaveta-usbank.png",
   },
   {
-    id: "case-5",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-5.jpg",
+    id: "case-maria",
+    name: "Мария",
+    result: "Full Time роль в Ref Group Indonesia",
+    photoUrl: "/figma/students/maria-ref-group.png",
   },
   {
-    id: "case-6",
-    name: "[ЗАПОЛНИТЬ] Имя студента",
-    result: "[ЗАПОЛНИТЬ] Результат / описание стажировки",
-    photoUrl: "/figma/students/Image-6.jpg",
+    id: "case-zhannur",
+    name: "Жаннур",
+    result: "Стажировка в PWC",
+    photoUrl: "/figma/students/Image-8.jpg",
   },
 ];
-
-export const AGE_RANGES = [
-  "16–17",
-  "18–20",
-  "21–23",
-  "24–26",
-  "27+",
-] as const;
-
-export const STUDY_STATUSES = [
-  { value: "studying", label: "Учусь" },
-  { value: "studying_working", label: "Учусь и работаю" },
-  { value: "working", label: "Работаю" },
-  { value: "graduated", label: "Окончил учёбу" },
-] as const;
-
-export const COURSE_OPTIONS = [
-  "1 курс",
-  "2 курс",
-  "3 курс",
-  "4 курс",
-  "Магистратура",
-  "Другое",
-] as const;
 
 export const FUNNEL_SECTION_IDS = {
   offer: "act-offer",

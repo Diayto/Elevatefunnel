@@ -32,26 +32,43 @@ export function FunnelHeader() {
         borderBottomColor: borderColor,
       }}
     >
-      <div className="relative mx-auto flex w-full max-w-[1200px] items-center justify-between px-4 py-4 lg:px-8 lg:py-5">
-        <a
-          href={`#${FUNNEL_SECTION_IDS.offer}`}
-          className="flex items-center transition hover:opacity-80"
+      <div className="relative mx-auto w-full max-w-[1200px] px-4 lg:px-8">
+        <div className="flex items-center justify-between py-4 lg:py-5">
+          <a
+            href={`#${FUNNEL_SECTION_IDS.offer}`}
+            className="flex shrink-0 items-center transition hover:opacity-80"
+          >
+            <Image
+              src="/figma/graphics/logo.svg"
+              alt="Elevate.Interns"
+              width={128}
+              height={13}
+              priority
+              className="h-[13px] w-[128px]"
+            />
+          </a>
+          <nav className="hidden items-center gap-5 lg:flex" aria-label="Навигация воронки">
+            {NAV.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="hover-underline text-[15px] text-white/90 transition hover:text-white"
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+        </div>
+
+        <nav
+          className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto pb-3 lg:hidden"
+          aria-label="Навигация воронки"
         >
-          <Image
-            src="/figma/graphics/logo.svg"
-            alt="Elevate.Interns"
-            width={128}
-            height={13}
-            priority
-            className="h-[13px] w-[128px]"
-          />
-        </a>
-        <nav className="hidden items-center gap-5 lg:flex" aria-label="Навигация воронки">
           {NAV.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="hover-underline text-[15px] text-white/90 transition hover:text-white"
+              className="shrink-0 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[13px] text-white/85 transition hover:border-white/30 hover:text-white"
             >
               {item.label}
             </a>

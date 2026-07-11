@@ -61,32 +61,6 @@ main [id^="act-"] {
   box-shadow: 0 0 18px 0 #4675ff;
 }
 
-/* ===== Partner marquee ===== */
-@keyframes partner-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.partner-marquee {
-  animation: partner-marquee 90s linear infinite;
-  will-change: transform;
-}
-
-.partner-marquee-wrap:hover .partner-marquee {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .partner-marquee {
-    animation: none;
-    transform: translateX(0);
-  }
-}
-
 /* ===== Card lift hover ===== */
 .lift-card {
   transition:

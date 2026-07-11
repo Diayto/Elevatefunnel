@@ -1,17 +1,33 @@
 import { NextResponse } from "next/server";
+import { toSheetsRow, type LeadSubmissionInput } from "@/lib/funnel/leadFormLabels";
+import { enforceLeadRateLimit, getClientIp } from "@/lib/leadRateLimit";
 
 export const maxDuration = 120;
 const WEBHOOK_TIMEOUT_MS = 15_000;
-const MAX_BODY_BYTES = 8192;
+const MAX_BODY_BYTES = 24_576;
 
 const MAX_LEN = {
   name: 200,
+  age: 40,
   country: 120,
   specialty: 200,
   contact: 120,
   course: 80,
-  age: 20,
   status: 40,
+  interest_reason: 2000,
+  internship_understanding: 2000,
+  career_importance: 2000,
+  experience: 2000,
+  english_level: 40,
+  english_certificate: 40,
+  internship_field: 200,
+  target_countries: 300,
+  start_timing: 40,
+  financial_situation: 80,
+  financial_decision: 80,
+  career_blockers: 2000,
+  consultation_goals: 500,
+  additional_notes: 2000,
   videos_watched: 16,
   watch_log: 2000,
 };
@@ -58,21 +74,7 @@ function isAllowedWebhookUrl(raw: string): boolean {
   }
 }
 
-type LeadPayload = {
-  name: string;
-  age: string;
-  country: string;
-  status: string;
-  course: string | null;
-  specialty: string;
-  contact: string;
-  videos_watched: string;
-  watch_log: string;
-  submittedAt: string;
-  source: "elevate-funnel";
-};
-
-async function postWebhook(payload: LeadPayload): Promise<boolean> {
+async function postWebhook(payload: ReturnType<typeof toSheetsRow>): Promise<boolean> {
   const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL?.trim();
   if (!url || !isAllowedWebhookUrl(url)) {
     if (process.env.NODE_ENV === "development") {
@@ -122,6 +124,10 @@ async function postWebhook(payload: LeadPayload): Promise<boolean> {
   }
 }
 
+function clip(value: unknown, max: number): string {
+  return typeof value === "string" ? value.trim().slice(0, max) : "";
+}
+
 export async function GET() {
   return NextResponse.json(
     { ok: false, error: "method_not_allowed" },
@@ -149,6 +155,18 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
+  const clientIp = getClientIp(req);
+  const rate = enforceLeadRateLimit(clientIp);
+  if (!rate.allowed) {
+    return NextResponse.json(
+      { ok: false, error: "rate_limited" },
+      {
+        status: 429,
+        headers: { "Retry-After": String(rate.retryAfter) },
+      },
+    );
+  }
+
   const ct = req.headers.get("content-type") ?? "";
   if (!ct.toLowerCase().includes("application/json")) {
     return NextResponse.json({ ok: false, error: "unsupported_media_type" }, { status: 415 });
@@ -171,53 +189,56 @@ export async function POST(req: Request) {
   }
 
   const record = body as Record<string, unknown>;
-  const {
-    name,
-    age,
-    country,
-    status,
-    course,
-    specialty,
-    contact,
-    website,
-    videos_watched,
-    watch_log,
-  } = record;
+  const { website } = record;
 
   if (typeof website === "string" && website.trim().length > 0) {
     return NextResponse.json({ ok: true });
   }
 
-  const n = typeof name === "string" ? name.trim() : "";
-  const a = typeof age === "string" ? age.trim() : "";
-  const ctry = typeof country === "string" ? country.trim() : "";
-  const st = typeof status === "string" ? status.trim() : "";
-  const spec = typeof specialty === "string" ? specialty.trim() : "";
-  const cont = typeof contact === "string" ? contact.trim() : "";
-  const crs = typeof course === "string" ? course.trim().slice(0, MAX_LEN.course) : "";
-  const vw =
-    typeof videos_watched === "string"
-      ? videos_watched.trim().slice(0, MAX_LEN.videos_watched)
-      : "";
-  const wl =
-    typeof watch_log === "string" ? watch_log.trim().slice(0, MAX_LEN.watch_log) : "";
+  const n = clip(record.name, MAX_LEN.name);
+  const a = clip(record.age, MAX_LEN.age);
+  const ctry = clip(record.country, MAX_LEN.country);
+  const st = clip(record.status, MAX_LEN.status);
+  const spec = clip(record.specialty, MAX_LEN.specialty);
+  const cont = clip(record.contact, MAX_LEN.contact);
+  const crs = clip(record.course, MAX_LEN.course);
+  const vw = clip(record.videos_watched, MAX_LEN.videos_watched) || "0/7";
+  const wl = clip(record.watch_log, MAX_LEN.watch_log) || "{}";
 
-  if (!n || n.length > MAX_LEN.name) {
+  const interestReason = clip(record.interest_reason, MAX_LEN.interest_reason);
+  const internshipUnderstanding = clip(
+    record.internship_understanding,
+    MAX_LEN.internship_understanding,
+  );
+  const careerImportance = clip(record.career_importance, MAX_LEN.career_importance);
+  const experience = clip(record.experience, MAX_LEN.experience);
+  const englishLevel = clip(record.english_level, MAX_LEN.english_level);
+  const englishCertificate = clip(record.english_certificate, MAX_LEN.english_certificate);
+  const internshipField = clip(record.internship_field, MAX_LEN.internship_field);
+  const targetCountries = clip(record.target_countries, MAX_LEN.target_countries);
+  const startTiming = clip(record.start_timing, MAX_LEN.start_timing);
+  const financialSituation = clip(record.financial_situation, MAX_LEN.financial_situation);
+  const financialDecision = clip(record.financial_decision, MAX_LEN.financial_decision);
+  const careerBlockers = clip(record.career_blockers, MAX_LEN.career_blockers);
+  const consultationGoals = clip(record.consultation_goals, MAX_LEN.consultation_goals);
+  const additionalNotes = clip(record.additional_notes, MAX_LEN.additional_notes);
+
+  if (!n) {
     return NextResponse.json({ ok: false, error: "invalid_name" }, { status: 400 });
   }
-  if (!a || a.length > MAX_LEN.age) {
+  if (!a) {
     return NextResponse.json({ ok: false, error: "invalid_age" }, { status: 400 });
   }
-  if (!ctry || ctry.length > MAX_LEN.country) {
+  if (!ctry) {
     return NextResponse.json({ ok: false, error: "invalid_country" }, { status: 400 });
   }
-  if (!st || st.length > MAX_LEN.status) {
+  if (!st) {
     return NextResponse.json({ ok: false, error: "invalid_status" }, { status: 400 });
   }
-  if (!spec || spec.length > MAX_LEN.specialty) {
+  if (!spec) {
     return NextResponse.json({ ok: false, error: "invalid_specialty" }, { status: 400 });
   }
-  if (!cont || cont.length < 3 || cont.length > MAX_LEN.contact) {
+  if (!cont || cont.length < 3) {
     return NextResponse.json({ ok: false, error: "invalid_contact" }, { status: 400 });
   }
 
@@ -226,22 +247,61 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid_course" }, { status: 400 });
   }
 
-  const payload: LeadPayload = {
+  const requiredLong = [
+    interestReason,
+    internshipUnderstanding,
+    careerImportance,
+    experience,
+    internshipField,
+    targetCountries,
+    careerBlockers,
+    additionalNotes,
+  ];
+  if (requiredLong.some((v) => v.length < 2)) {
+    return NextResponse.json({ ok: false, error: "invalid_answers" }, { status: 400 });
+  }
+
+  if (!englishLevel || !englishCertificate || !startTiming || !financialSituation || !financialDecision) {
+    return NextResponse.json({ ok: false, error: "invalid_choices" }, { status: 400 });
+  }
+
+  if (!consultationGoals) {
+    return NextResponse.json({ ok: false, error: "invalid_goals" }, { status: 400 });
+  }
+
+  const ageValue = clip(record.age_value, MAX_LEN.age);
+
+  const submission: LeadSubmissionInput = {
     name: n,
     age: a,
+    age_value: ageValue,
     country: ctry,
     status: st,
-    course: needsCourse ? crs : null,
+    course: needsCourse ? crs : "",
     specialty: spec,
+    interest_reason: interestReason,
+    internship_understanding: internshipUnderstanding,
+    career_importance: careerImportance,
+    experience,
+    english_level: englishLevel,
+    english_certificate: englishCertificate,
+    internship_field: internshipField,
+    target_countries: targetCountries,
+    start_timing: startTiming,
+    financial_situation: financialSituation,
+    financial_decision: financialDecision,
+    career_blockers: careerBlockers,
+    consultation_goals: consultationGoals,
+    additional_notes: additionalNotes,
     contact: cont,
-    videos_watched: vw || "0/7",
-    watch_log: wl || "{}",
-    submittedAt: new Date().toISOString(),
-    source: "elevate-funnel",
+    videos_watched: vw,
+    watch_log: wl,
   };
 
+  const payload = toSheetsRow(submission);
+
   if (!isProd && !hasWebhook) {
-    console.log("[api/submit-lead] dev mode — lead accepted (no webhook configured)");
+    console.log("[api/submit-lead] dev mode — lead accepted (no webhook configured)", payload.name);
     return NextResponse.json({ ok: true });
   }
 

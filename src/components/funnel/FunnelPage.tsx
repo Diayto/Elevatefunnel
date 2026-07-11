@@ -20,7 +20,7 @@ export function FunnelPage() {
       <FunnelHeader />
       <ProgressBar formSubmitted={formSubmitted} />
 
-      <main className="relative z-10 overflow-x-clip bg-black pt-[92px] sm:pt-[100px]">
+      <main className="relative z-10 overflow-x-clip bg-black pt-[120px] sm:pt-[124px] lg:pt-[100px]">
         <OfferHero />
         <VideoQuestionsSection
           watchState={state}

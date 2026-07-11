@@ -20,6 +20,12 @@ export function createEmptyWatchState(): VideoWatchState {
   };
 }
 
+export function isVideoUnlocked(state: VideoWatchState, index: number): boolean {
+  if (index <= 0) return true;
+  const prevKey = VIDEO_WATCH_KEYS[index - 1];
+  return Boolean(prevKey && state[prevKey]);
+}
+
 export function countWatched(state: VideoWatchState): number {
   return VIDEO_WATCH_KEYS.filter((key) => state[key]).length;
 }

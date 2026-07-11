@@ -80,7 +80,13 @@ function VideoFrame({ children }: { children: React.ReactNode }) {
   );
 }
 
-function VideoPlaceholder() {
+function VideoPlaceholder({
+  onContinue,
+  canContinue,
+}: {
+  onContinue?: () => void;
+  canContinue?: boolean;
+}) {
   return (
     <div
       className="absolute inset-0 flex flex-col items-center justify-center bg-[#060a12] text-white/60"
@@ -97,6 +103,15 @@ function VideoPlaceholder() {
       <p className="mt-4 px-6 text-center text-[13px] uppercase tracking-[0.14em] text-white/50">
         Видео скоро появится
       </p>
+      {canContinue && onContinue ? (
+        <button
+          type="button"
+          onClick={onContinue}
+          className="mt-6 rounded-full border border-white/20 bg-white/5 px-5 py-2.5 text-[14px] text-white/80 transition hover:border-[#0078F0] hover:bg-[rgba(0,120,240,0.12)] hover:text-white"
+        >
+          Продолжить без видео
+        </button>
+      ) : null}
     </div>
   );
 }
@@ -196,7 +211,12 @@ export function TrackedYouTubePlayer({
   if (!videoId) {
     return (
       <VideoFrame>
-        <VideoPlaceholder />
+        <VideoPlaceholder
+          canContinue={!watched}
+          onContinue={() => {
+            if (!watched) onWatched();
+          }}
+        />
       </VideoFrame>
     );
   }

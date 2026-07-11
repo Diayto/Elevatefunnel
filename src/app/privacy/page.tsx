@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { PrivacyPolicyContent } from "@/components/legal/PrivacyPolicyContent";
-import { SiteFooter } from "@/components/layout/SiteFooter";
-import { SiteHeader } from "@/components/layout/SiteHeader";
+import { FunnelFooter } from "@/components/layout/FunnelFooter";
+import { FunnelHeader } from "@/components/layout/FunnelHeader";
+import { FUNNEL_SECTION_IDS } from "@/lib/funnel/config";
 
 export const metadata: Metadata = {
   title: "Политика конфиденциальности | Elevate Interns",
@@ -14,9 +15,8 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <SiteHeader />
-      <main className="relative z-10 min-h-screen overflow-hidden bg-black">
-        {/* Background decoration */}
+      <FunnelHeader />
+      <main className="relative z-10 min-h-screen overflow-hidden bg-black pt-[72px] sm:pt-[80px]">
         <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden>
           <div
             className="absolute"
@@ -38,25 +38,24 @@ export default function PrivacyPage() {
           </div>
         </div>
 
-        <div className="relative z-10 mx-auto max-w-[800px] px-8 pb-20 pt-28">
+        <div className="relative z-10 mx-auto max-w-[800px] px-8 pb-20 pt-12">
           <PrivacyPolicyContent />
 
           <p className="mt-12 text-center">
             <Link
               className="inline-flex items-center gap-2 text-[14px] text-[#4a8fff] transition hover:text-white"
-              href="/#act-apply"
+              href={`/#${FUNNEL_SECTION_IDS.form}`}
             >
-              ← К форме заявки
+              ← К анкете
             </Link>
           </p>
         </div>
 
-        {/* Divider */}
         <div className="mx-auto max-w-[1200px] px-8">
           <div className="h-px bg-white/10" />
         </div>
 
-        <SiteFooter />
+        <FunnelFooter />
       </main>
     </>
   );
