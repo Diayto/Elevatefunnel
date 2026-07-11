@@ -310,16 +310,26 @@ export function LeadFormOverlay({ open, onClose, watchState, onSubmitted }: Lead
       });
 
       const raw = await res.text();
-      let parsed: { ok?: boolean } = {};
+      let parsed: { ok?: boolean; error?: string } = {};
       try {
-        if (raw.trim()) parsed = JSON.parse(raw) as { ok?: boolean };
+        if (raw.trim()) parsed = JSON.parse(raw) as { ok?: boolean; error?: string };
       } catch {
         /* non-JSON */
       }
 
       if (!res.ok || !parsed.ok) {
         setSubmitStatus("error");
-        setErrorMessage("Попробуйте ещё раз");
+        if (parsed.error === "webhook_unauthorized") {
+          setErrorMessage(
+            "Ошибка связи с Google Таблицей: не совпадает секрет. Проверьте GOOGLE_SHEETS_WEBHOOK_SECRET на Vercel и WEBHOOK_SECRET в Apps Script.",
+          );
+        } else if (parsed.error === "not_configured") {
+          setErrorMessage("Форма не настроена на сервере. Добавьте GOOGLE_SHEETS_WEBHOOK_URL в Vercel.");
+        } else if (parsed.error === "rate_limited") {
+          setErrorMessage("Слишком много попыток. Подождите несколько минут.");
+        } else {
+          setErrorMessage("Попробуйте ещё раз");
+        }
         return;
       }
 

@@ -74,13 +74,15 @@ function isAllowedWebhookUrl(raw: string): boolean {
   }
 }
 
-async function postWebhook(payload: ReturnType<typeof toSheetsRow>): Promise<boolean> {
+async function postWebhook(
+  payload: ReturnType<typeof toSheetsRow>,
+): Promise<{ ok: true } | { ok: false; reason: string }> {
   const url = process.env.GOOGLE_SHEETS_WEBHOOK_URL?.trim();
   if (!url || !isAllowedWebhookUrl(url)) {
     if (process.env.NODE_ENV === "development") {
       console.error("[api/submit-lead] GOOGLE_SHEETS_WEBHOOK_URL missing or not allowed");
     }
-    return false;
+    return { ok: false, reason: "webhook_not_configured" };
   }
 
   const headers: Record<string, string> = {
@@ -100,27 +102,29 @@ async function postWebhook(payload: ReturnType<typeof toSheetsRow>): Promise<boo
       headers,
       body: JSON.stringify(body),
       signal: AbortSignal.timeout(WEBHOOK_TIMEOUT_MS),
+      redirect: "follow",
     });
     const text = await res.text().catch(() => "");
     if (!res.ok) {
-      console.error("[api/submit-lead] webhook HTTP error", res.status);
-      return false;
+      console.error("[api/submit-lead] webhook HTTP error", res.status, text.slice(0, 200));
+      return { ok: false, reason: "webhook_http_error" };
     }
     try {
-      const parsed = JSON.parse(text) as { ok?: unknown };
+      const parsed = JSON.parse(text) as { ok?: unknown; error?: string };
       if (parsed && typeof parsed === "object" && parsed.ok === true) {
-        return true;
+        return { ok: true };
+      }
+      if (parsed?.error === "unauthorized") {
+        return { ok: false, reason: "webhook_unauthorized" };
       }
     } catch {
       /* non-JSON */
     }
-    console.error("[api/submit-lead] webhook returned 200 but not ok:true");
-    return false;
+    console.error("[api/submit-lead] webhook returned 200 but not ok:true", text.slice(0, 200));
+    return { ok: false, reason: "webhook_bad_response" };
   } catch (err) {
-    if (process.env.NODE_ENV === "development") {
-      console.error("[api/submit-lead] webhook fetch error", err);
-    }
-    return false;
+    console.error("[api/submit-lead] webhook fetch error", err);
+    return { ok: false, reason: "webhook_fetch_error" };
   }
 }
 
@@ -306,8 +310,14 @@ export async function POST(req: Request) {
   }
 
   const delivered = await postWebhook(payload);
-  if (!delivered) {
-    return NextResponse.json({ ok: false, error: "delivery_failed" }, { status: 502 });
+  if (!delivered.ok) {
+    const errorCode =
+      delivered.reason === "webhook_unauthorized"
+        ? "webhook_unauthorized"
+        : delivered.reason === "webhook_not_configured"
+          ? "not_configured"
+          : "delivery_failed";
+    return NextResponse.json({ ok: false, error: errorCode }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });
