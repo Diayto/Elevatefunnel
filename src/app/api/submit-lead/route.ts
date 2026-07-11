@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { toSheetsRow, type LeadSubmissionInput } from "@/lib/funnel/leadFormLabels";
+import { isDuplicateLead } from "@/lib/leadDedup";
+import {
+  isValidVideosWatched,
+  sanitizeWatchLog,
+  validateLeadChoices,
+} from "@/lib/leadFormServerValidation";
 import { enforceLeadRateLimit, getClientIp } from "@/lib/leadRateLimit";
 
-export const maxDuration = 120;
+export const maxDuration = 30;
 const WEBHOOK_TIMEOUT_MS = 15_000;
 const MAX_BODY_BYTES = 24_576;
 
@@ -151,11 +157,17 @@ export async function POST(req: Request) {
   const webhookUrlRaw = process.env.GOOGLE_SHEETS_WEBHOOK_URL?.trim();
   const hasWebhook = Boolean(webhookUrlRaw);
 
+  const webhookSecret = process.env.GOOGLE_SHEETS_WEBHOOK_SECRET?.trim();
+
   if (isProd && !hasWebhook) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
   if (isProd && webhookUrlRaw && !isAllowedWebhookUrl(webhookUrlRaw)) {
+    return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
+  }
+
+  if (isProd && hasWebhook && !webhookSecret) {
     return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
   }
 
@@ -207,7 +219,7 @@ export async function POST(req: Request) {
   const cont = clip(record.contact, MAX_LEN.contact);
   const crs = clip(record.course, MAX_LEN.course);
   const vw = clip(record.videos_watched, MAX_LEN.videos_watched) || "0/7";
-  const wl = clip(record.watch_log, MAX_LEN.watch_log) || "{}";
+  const wl = sanitizeWatchLog(clip(record.watch_log, MAX_LEN.watch_log) || "{}");
 
   const interestReason = clip(record.interest_reason, MAX_LEN.interest_reason);
   const internshipUnderstanding = clip(
@@ -273,7 +285,29 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "invalid_goals" }, { status: 400 });
   }
 
-  const ageValue = clip(record.age_value, MAX_LEN.age);
+  const ageValue = clip(record.age_value, MAX_LEN.age) || a;
+
+  if (!validateLeadChoices({
+    age_value: ageValue,
+    status: st,
+    course: crs,
+    english_level: englishLevel,
+    english_certificate: englishCertificate,
+    start_timing: startTiming,
+    financial_situation: financialSituation,
+    financial_decision: financialDecision,
+    consultation_goals: consultationGoals,
+  })) {
+    return NextResponse.json({ ok: false, error: "invalid_choices" }, { status: 400 });
+  }
+
+  if (!isValidVideosWatched(vw)) {
+    return NextResponse.json({ ok: false, error: "invalid_body" }, { status: 400 });
+  }
+
+  if (isDuplicateLead(cont)) {
+    return NextResponse.json({ ok: true });
+  }
 
   const submission: LeadSubmissionInput = {
     name: n,
@@ -311,13 +345,10 @@ export async function POST(req: Request) {
 
   const delivered = await postWebhook(payload);
   if (!delivered.ok) {
-    const errorCode =
-      delivered.reason === "webhook_unauthorized"
-        ? "webhook_unauthorized"
-        : delivered.reason === "webhook_not_configured"
-          ? "not_configured"
-          : "delivery_failed";
-    return NextResponse.json({ ok: false, error: errorCode }, { status: 502 });
+    if (delivered.reason === "webhook_not_configured") {
+      return NextResponse.json({ ok: false, error: "not_configured" }, { status: 503 });
+    }
+    return NextResponse.json({ ok: false, error: "delivery_failed" }, { status: 502 });
   }
 
   return NextResponse.json({ ok: true });

@@ -319,13 +319,7 @@ export function LeadFormOverlay({ open, onClose, watchState, onSubmitted }: Lead
 
       if (!res.ok || !parsed.ok) {
         setSubmitStatus("error");
-        if (parsed.error === "webhook_unauthorized") {
-          setErrorMessage(
-            "Ошибка связи с Google Таблицей: не совпадает секрет. Проверьте GOOGLE_SHEETS_WEBHOOK_SECRET на Vercel и WEBHOOK_SECRET в Apps Script.",
-          );
-        } else if (parsed.error === "not_configured") {
-          setErrorMessage("Форма не настроена на сервере. Добавьте GOOGLE_SHEETS_WEBHOOK_URL в Vercel.");
-        } else if (parsed.error === "rate_limited") {
+        if (parsed.error === "rate_limited") {
           setErrorMessage("Слишком много попыток. Подождите несколько минут.");
         } else {
           setErrorMessage("Попробуйте ещё раз");

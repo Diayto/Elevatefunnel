@@ -178,7 +178,8 @@ function doPost(e) {
 
     return jsonResponse_({ ok: true });
   } catch (err) {
-    return jsonResponse_({ ok: false, error: String(err) });
+    Logger.log("doPost error: " + err);
+    return jsonResponse_({ ok: false, error: "internal_error" });
   }
 }
 
